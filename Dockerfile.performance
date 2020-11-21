@@ -1,0 +1,7 @@
+FROM egaillardon/jmeter
+
+COPY performance-tests/performance.jmx /jmeter/performance.jmx
+
+WORKDIR /jmeter
+
+CMD jmeter -n -t performance.jmx -l results.jtl -j jmeter.log -Jjmeter.save.saveservice.output_format=xml

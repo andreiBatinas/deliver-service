@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+option go_package = "proto;protogen";
+option java_multiple_files = true;
+option java_package = "io.bff.service.account";
+option java_outer_classname = "AccountProto";
+
+import "proto/account.proto";
+import "proto/auth.proto";
+
+package account.service;
+
+// GRPC
+service AccountService {
+  rpc AccountRegister (AccountRegisterRequest) returns (AccountRegisterResponse);
+  rpc AccountRemove (AccountRemoveRequest) returns (AccountRemoveResponse);
+  rpc AccountAuthenticate(AccountAuthenticationRequest) returns (AccountRegisterResponse);
+  rpc AccountGet(AccountRequest) returns (AccountResponse);
+  rpc AccountUpdate(AccountRequest) returns (AccountResponse);
+}
+
+message AccountRequest{
+  account.Account account = 1;
+  auth.Auth auth = 9999;
+}
+
+message AccountResponse{
+  bool status = 1;
+  string error = 2;
+  message Data {
+    account.Account account = 1;
+  }
+
+  Data data = 3;
+}
+
+message AccountAuthenticationRequest{
+  account.AccountAuthenticate account_authenticate = 1;
+}
+
+message AccountRegisterRequest {
+  account.Account account = 1;
+  account.User user = 4;
+}
+
+message AccountRegisterResponse {
+  bool status = 1;
+  string error = 2;
+
+  message Data {
+    account.Account account = 1;
+    account.User user = 2;
+    message Auth {
+      string token = 1;
+    };
+    Auth auth = 5;
+  }
+
+  Data data = 3;
+}
+
+message AccountRemoveRequest {
+  string id = 1;
+  auth.Auth auth = 9999;
+}
+
+message AccountRemoveResponse {
+  bool status = 1;
+  string error = 2;
+}
+
+// Kafka
+message AccountCreated {
+  account.Account account = 1;
+}
+
+message AccountUpdated {
+  account.Account account = 1;
+}
+
+message AccountRemoved {
+  account.Account account = 1;
+}
+
+message AccountMessage {
+  oneof account_action {
+    AccountCreated account_created = 1;
+    AccountUpdated account_updated = 2;
+    AccountRemoved account_removed = 3;
+  }
+}

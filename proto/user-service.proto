@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+option go_package = "proto;protogen";
+option java_multiple_files = true;
+option java_package = "io.bff.service.account";
+option java_outer_classname = "AccountProto";
+
+import "proto/account.proto";
+import "proto/auth.proto";
+
+
+package user;
+
+// GRPC
+service UserService {
+  rpc UserCreate (UserRequest) returns (UserResponse);
+  rpc UserUpdate (UserRequest) returns (UserResponse);
+  rpc UserRemove (UserRequest) returns (UserResponse);
+  rpc UserGet (UserRequest) returns (UserResponse);
+  rpc UserChangePassword(UserChangePasswordRequest) returns (UserResponse);
+}
+
+message UserChangePasswordRequest{
+  account.UserChangePassword user_change_password = 1;
+  auth.Auth auth = 9999;
+}
+
+message UserRequest {
+  account.User user = 1;
+  auth.Auth auth = 9999;
+}
+
+message UserResponse {
+  bool status = 1;
+  string error = 2;
+
+  message Data {
+    account.User user = 1;
+  }
+
+  Data data = 3;
+}
+
+message UserListResponse {
+  bool status = 1;
+  string error = 2;
+
+  message Data {
+    repeated account.User users = 1;
+  }
+
+  Data data = 3;
+}
+
+
+
+// Kafka
+message UserCreated {
+  account.User user = 1;
+}
+
+message UserUpdated {
+  account.User user = 1;
+}
+
+message UserRemoved {
+  account.User user = 1;
+}
+
+message UserMessage {
+  oneof user_action {
+    UserCreated user_created = 1;
+    UserUpdated user_updated = 2;
+    UserRemoved user_removed = 3;
+  }
+}

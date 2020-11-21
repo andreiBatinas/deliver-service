@@ -1,0 +1,76 @@
+{
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "workbench.enableExperiments": false,
+  "breadcrumbs.enabled": true,
+  "files.exclude": {
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/vendor": true
+  },
+  "files.watcherExclude": {
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/vendor": true
+  },
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  "html.format.wrapAttributes": "force-aligned",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "words",
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 1,
+  "importSorter.importStringConfiguration.trailingComma": "multiLine",
+  "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "type": "importMember",
+      "regex": "^$",
+      "orderLevel": 5,
+      "disableSort": true
+    },
+    {
+      "regex": "^[@]",
+      "orderLevel": 10
+    },
+    {
+      "regex": "^[^.@]",
+      "orderLevel": 15
+    },
+    {
+      "regex": "^[.]",
+      "orderLevel": 30
+    }
+  ],
+  "importSorter.importStringConfiguration.tabSize": 2,
+  "importSorter.importStringConfiguration.tabType": "space",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true,
+    "source.organizeImports": true
+  },
+  "editor.tabSize": 2,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 2000,
+  "cSpell.words": [
+    "Eurecat",
+    "Grpc",
+    "balancemethod",
+    "datadog",
+    "dogstatsd",
+    "maxcalls",
+    "nocache",
+    "serializers",
+    "uuid"
+  ],
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "none",
+  "go.lintTool": "revive",
+  "go.lintOnSave": "workspace",
+  "go.useLanguageServer": true
+}
