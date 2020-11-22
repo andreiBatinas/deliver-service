@@ -27,33 +27,6 @@ type config struct {
 	GRPC struct {
 		Port string
 	}
-	Kafka struct {
-		Group      string
-		BrokerList []string `json:"brokerList"`
-		Version    string
-		Secured    bool
-		Conusmer   struct {
-			Offset int64
-		}
-		Topic struct {
-			Account struct {
-				Name   string
-				Region string
-			}
-			Domain struct {
-				Name   string
-				Region string
-			}
-			Team struct {
-				Name   string
-				Region string
-			}
-			User struct {
-				Name   string
-				Region string
-			}
-		}
-	}
 }
 
 var (

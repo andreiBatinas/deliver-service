@@ -13,12 +13,34 @@ package user;
 
 // GRPC
 service UserService {
-  rpc UserCreate (UserRequest) returns (UserResponse);
+  rpc UserRegister (UserRequest) returns (UserRegisterResponse);
   rpc UserUpdate (UserRequest) returns (UserResponse);
   rpc UserRemove (UserRequest) returns (UserResponse);
   rpc UserGet (UserRequest) returns (UserResponse);
   rpc UserChangePassword(UserChangePasswordRequest) returns (UserResponse);
+  rpc UserAuthenticate(UserAuthenticationRequest) returns (UserResponse);
 }
+
+message UserAuthenticationRequest{
+  account.UserAuthenticate user_authenticate = 1;
+}
+
+message UserRegisterResponse {
+  bool status = 1;
+  string error = 2;
+
+  message Data {
+    account.User user = 1;
+    message Auth {
+      string token = 1;
+    };
+    Auth auth = 2;
+  }
+
+  Data data = 3;
+}
+
+
 
 message UserChangePasswordRequest{
   account.UserChangePassword user_change_password = 1;

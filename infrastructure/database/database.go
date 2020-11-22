@@ -30,7 +30,7 @@ type databaseHandler struct {
 }
 
 func connectPostgres(c dbCredentials) (*gorm.DB, error) {
-	db, err := gorm.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s", c.Host, c.Port, c.User, c.Database, c.Password))
+	db, err := gorm.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s sslmode=disable", c.Host, c.Port, c.User, c.Database, c.Password))
 	if err != nil {
 		log.Error(err)
 		return nil, err

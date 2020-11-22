@@ -9,17 +9,7 @@ option java_outer_classname = "EntitiesProto";
 package account;
 
 // Entities
-message Account {
-  string id = 1;
-  string name = 2;
-  string address_first_line = 3;
-  string address_second_line = 4;
-  string postal_code = 5;
-  string city = 6;
-  string country = 7;
-}
-
-message AccountAuthenticate{
+message UserAuthenticate{
   string email = 1;
   string password = 2;
 }
@@ -36,11 +26,9 @@ message User {
   string email = 2;
   string password = 3;
   string name = 4;
-  string surname = 5;
   string token = 6;
   string status = 7;
   string status_reason = 8;
-
   string phone = 9;
 
   Role role = 9999;

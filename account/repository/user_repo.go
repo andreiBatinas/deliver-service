@@ -26,8 +26,6 @@ func (repo *userRepository) GetFullByID(id string) (*domain.User, *validator.Val
 	user := &domain.User{}
 	v := validator.NewValidator()
 	if err := repo.DB.
-		Preload(domain.AccountsName).
-		Preload(domain.TeamsName).
 		Preload(domain.RolesName).
 		Where("id = ?", id).First(&user).Error; err != nil {
 		v.FromSQL(domain.User{}, err)
@@ -42,7 +40,6 @@ func (repo *userRepository) GetByID(id string) (*domain.User, *validator.Validat
 	v := validator.NewValidator()
 	if err := repo.DB.
 		Preload(domain.RolesName).
-		Preload(domain.TeamsName).
 		Where("id = ?", id).First(&user).Error; err != nil {
 		v.FromSQL(domain.User{}, err)
 		return nil, v

@@ -25,20 +25,17 @@ var (
 
 // User model structure
 type User struct {
-	ID           string     `json:"id" gorm:"type:uuid;primary_key;default:uuid_generate_v4()"`
-	Email        string     `json:"email" gorm:"column:email" validate:"required,email"`
-	Password     string     `json:"password" gorm:"column:password" validate:"required,min=6,containsany=!@#$%^&*()_"`
-	Name         string     `json:"name" gorm:"column:name" validate:"required"`
-	Surname      string     `json:"surname" gorm:"column:surname" validate:"required"`
-	Phone        string     `json:"phone" gorm:"column:phone" validate:"required"`
-	Token        string     `json:"token" gorm:"column:token"`
-	Status       string     `json:"status" gorm:"column:status"`
-	StatusReason string     `json:"statusReason" gorm:"column:status_reason"`
-	CreatedAt    time.Time  `json:"createdAt" gorm:"column:created_at"`
-	UpdatedAt    time.Time  `json:"updatedAt" gorm:"column:updated_at"`
-	Accounts     []*Account `json:"accounts" gorm:"many2many:account.accounts_users"`
-	Roles        []*Role    `json:"roles" gorm:"many2many:account.users_roles"`
-	Teams        []*Team    `json:"teams" gorm:"many2many:account.users_teams"`
+	ID           string    `json:"id" gorm:"type:uuid;primary_key;default:uuid_generate_v4()"`
+	Email        string    `json:"email" gorm:"column:email" validate:"required,email"`
+	Password     string    `json:"password" gorm:"column:password" validate:"required,min=6,containsany=!@#$%^&*()_"`
+	Name         string    `json:"name" gorm:"column:name" validate:"required"`
+	Phone        string    `json:"phone" gorm:"column:phone" validate:"required"`
+	Token        string    `json:"token" gorm:"column:token"`
+	Status       string    `json:"status" gorm:"column:status"`
+	StatusReason string    `json:"statusReason" gorm:"column:status_reason"`
+	CreatedAt    time.Time `json:"createdAt" gorm:"column:created_at"`
+	UpdatedAt    time.Time `json:"updatedAt" gorm:"column:updated_at"`
+	Roles        []*Role   `json:"roles" gorm:"many2many:account.users_roles"`
 }
 
 // TableName set domain with schema
@@ -60,17 +57,20 @@ type UserChangePassword struct {
 	NewPassword string `json:"newPassword" validate:"required,min=6,containsany=!@#$%^&*()_"`
 }
 
+// UserAuthenticate structure
+type UserAuthenticate struct {
+	Email    string `validate:"required"`
+	Password string `validate:"required"`
+}
+
 // UserUseCase usecase interface
 type UserUseCase interface {
 	UserGet(user *User) (*User, error)
-	UserList(account *Account) ([]User, error)
-	UserCreate(account *Account, user *User) (*User, error)
-	UserUpdate(account *Account, user *User) (*User, error)
-	UserRemove(account *Account, user *User) (*User, error)
-	UserAssignTeams(account *Account, user *User, teamList []*Team) (*User, error)
-	UserRemoveTeams(account *Account, user *User, teamList []*Team) (*User, error)
-	UserSetDefaultTeam(account *Account, user *User, team *Team) (*User, error)
+	UserRegister(user *User) (*User, error)
+	UserUpdate(user *User) (*User, error)
+	UserRemove(user *User) (*User, error)
 	UserChangePassword(user *User, in *UserChangePassword) (*User, error)
+	UserAuthenticate(in *UserAuthenticate) (*User, error)
 }
 
 // UserRepository repository interface

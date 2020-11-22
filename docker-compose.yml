@@ -1,0 +1,64 @@
+version: '3.6'
+services:
+  # # Redis
+  # redis:
+  #   image: "redis:alpine"
+  #   command: redis-server
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - whisbi-redis:/var/lib/redis
+  #     - whisbi-redis:/usr/local/etc/redis/redis.conf
+  #   environment:
+  #     - REDIS_REPLICATION_MODE=master
+  #   networks:
+  #     - whisbi-dev-net
+
+  # PostgreSQL
+  postgres:
+    hostname: postgres
+    image: postgres:9.6
+    restart: 'always'
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_DB: 'dev'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:
+      - 'delivery-postgres:/var/lib/postgresql/data'
+    ports:
+      - '5433:5432'
+    networks:
+      - delivery-dev-net
+
+  # # MySQL
+  # mysql:
+  #   image: mysql:5.7
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: 'whisbiconfiguration_core'
+  #     MYSQL_USER: 'coreusr'
+  #     MYSQL_PASSWORD: 'corepass'
+  #     MYSQL_ROOT_PASSWORD: 'password'
+  #   ports:
+  #     - '3306:3306'
+  #   volumes:
+  #     - whisbi-mysql:/var/lib/mysql
+  #   networks:
+  #     - whisbi-dev-net
+
+# Network
+networks:
+  delivery-dev-net:
+    driver: bridge
+
+# Volumes - docker volume create --driver local delivery-postgres
+# Volumes - docker volume create --driver local whisbi-mysql
+# Volumes - docker volume create --driver local whisbi-redis
+volumes:
+  delivery-postgres:
+    external: true
+  # whisbi-mysql:
+  #   external: true
+  # whisbi-redis:
+  #   external: true
