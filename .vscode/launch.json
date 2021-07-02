@@ -5,14 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch",
-      "type": "go",
+      "type": "node",
       "request": "launch",
-      "mode": "auto",
-      "program": "${workspaceFolder}/cmd/app/main.go",
-      "cwd": "${workspaceFolder}",
-      "env": {},
-      "args": []
+      "name": "Launch Program",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "runtimeExecutable": "node",
+      "args" : ["main.js"],
+      "outputCapture": "std",
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ]
     }
   ]
 }

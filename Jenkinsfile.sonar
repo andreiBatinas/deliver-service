@@ -1,0 +1,12 @@
+node ('COMPILER2') {
+
+  stage('Checkout') {
+    checkout scm
+  }
+
+  stage('Sonar Scanner') {
+    def testImage = docker.build("conversation-builder-service-sonar-image", "-f ./deploy/Dockerfile.sonar .")
+    sh 'docker run --rm conversation-builder-service-sonar-image'
+  }
+
+}

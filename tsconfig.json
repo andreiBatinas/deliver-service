@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "target": "ES6",
+    "moduleResolution": "node",
+    "lib": ["ES2015", "es2016", "dom", "es5", "ES6"],
+    "newLine": "lf",
+    "allowJs": true,
+    "noEmit": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "plugins": [{ "name": "typescript-tslint-plugin" }],
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["src/**/*.ts", "proto"],
+  "exclude": ["node_modules", "**/*.spec.ts", "proto"]
+}

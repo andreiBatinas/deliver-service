@@ -1,34 +1,38 @@
+
 {
-  "debug": true,
-  "name": "delivery-service",
-  "server": {
-    "address": "localhost",
-    "port": 8080
+  "env": "dev",
+  "http": {
+    "port": 9400
   },
-  "grpc": {
-    "port": 25002
+  "datadog": {
+    "url": "//TBA"
   },
-  "db": {
-    "driver": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "user": "",
-    "password": "",
-    "database": "postgres"
+  "eurecatDataApi": {
+    "returnRejectedPromiseOnError": true,
+    "withCredentials": true,
+    "timeout": 30000,
+    "baseURL": "https://reqres.in/",
+    "headers": {
+      "common": {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    }
   },
-  "kafka": {
-    "group": "local-account-group-01",
-    "brokerList": [
-      "b-1.streamingv2-kafka-dev.g2xhs6.c4.kafka.eu-west-1.amazonaws.com:9094",
-      "b-2.streamingv2-kafka-dev.g2xhs6.c4.kafka.eu-west-1.amazonaws.com:9094"
-    ],
-    "version": "2.1.1",
-    "secured": true,
-    "topic": {
-      "account": { "name": "account.cdc.accounts", "region": "*" },
-      "domain": { "name": "account.cdc.domains", "region": "*" },
-      "team": { "name": "account.cdc.teams", "region": "*" },
-      "user": { "name": "account.cdc.users", "region": "*" }
+  "eurecatPredictionApi": {
+    "returnRejectedPromiseOnError": true,
+    "withCredentials": true,
+    "timeout": 30000,
+    "baseURL": "https://reqres.in/",
+    "headers": {
+      "common": {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
     }
   }
 }

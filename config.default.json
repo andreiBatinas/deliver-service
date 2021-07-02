@@ -1,0 +1,15 @@
+{
+  "env": "dev",
+  "http": {
+    "port": 9400
+  },
+  "db": {
+    "driver": "mssql",
+    "host": "MSSQL_HOST",
+    "port": "MSSQL_PORT",
+    "username": "MSSQL_USER",
+    "password": "MSSQL_PASSWORD",
+    "database": "MSSQL_DATABASE",
+    "logging": true
+  }
+}
