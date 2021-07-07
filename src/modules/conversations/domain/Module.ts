@@ -6,7 +6,7 @@ import {
   Result,
   Validator,
 } from '../../../core/logic';
-import { Conversation } from '../../../infrastructure/typeorm/models';
+import { Conversation } from '../../../infrastructure/typeorm/models/oldModels';
 
 interface ModuleProps {
   id?: string;

@@ -4,12 +4,12 @@
     "port": 9400
   },
   "db": {
-    "driver": "mssql",
-    "host": "MSSQL_HOST",
-    "port": "MSSQL_PORT",
-    "username": "MSSQL_USER",
-    "password": "MSSQL_PASSWORD",
-    "database": "MSSQL_DATABASE",
+    "driver": "postgres",
+    "host": "207.154.200.15",
+    "port": "5432",
+    "username": "user",
+    "password": "pass",
+    "database": "delivery_db",
     "logging": true
   }
 }

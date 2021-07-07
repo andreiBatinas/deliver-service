@@ -4,7 +4,7 @@ import {
   GenericErrors,
   Result,
   right,
-  wrong,
+  wrong
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
 import { ConversationId } from '../../domain/ConversationId';
@@ -43,7 +43,7 @@ export class AddModuleUseCase implements UseCase<AddModuleDTO, Response> {
     const moduleMap = ModuleMap.toDomain(req);
     const moduleOrError = Module.New(moduleMap);
 
-    const conversationidmap = ConversationIdMap.toDomain(req);
+    const conversationIdMap = ConversationIdMap.toDomain(req);
     const conversationIdOrError = ConversationId.New(conversationIdMap);
 
     if (moduleOrError.isFailure) {

@@ -3,7 +3,7 @@ import {
   InputType,
   Module,
   ModuleType,
-} from '../../../infrastructure/typeorm/models';
+} from '../../../infrastructure/typeorm/models/oldModels';
 import { ConversationRepo } from './ConversationRepo';
 import { InputTypeRepo } from './InputTypeRepo';
 import { ModuleRepo } from './ModuleRepo';

@@ -2,19 +2,11 @@
 import {
   Connection,
   createConnection,
-  getConnection,
+  getConnection
 } from 'typeorm';
-
 import { Configuration } from '../../config/Config';
 import { Logger } from '../logger';
-import {
-  Conversation,
-  InputType,
-  Module,
-  ModuleInput,
-  ModuleType,
-  Variable,
-} from './models';
+
 
 // eslint-disable-next-line no-shadow
 enum DatabaseError {
@@ -35,14 +27,9 @@ async function ConnectDatabase(log: Logger) {
       password: Configuration.db.password,
       database: Configuration.db.database,
       logging: Configuration.db.logging,
-      schema: 'dbo',
+      schema: 'public',
       entities: [
-        Conversation,
-        ModuleType,
-        Module,
-        ModuleInput,
-        Variable,
-        InputType,
+
       ],
     });
 
@@ -54,3 +41,4 @@ async function ConnectDatabase(log: Logger) {
 }
 
 export { ConnectDatabase, DB };
+
