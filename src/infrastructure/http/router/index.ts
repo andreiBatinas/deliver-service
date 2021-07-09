@@ -1,18 +1,14 @@
 import { Router } from 'express';
 import { systemRouter } from '../../../core/infrastructure/http/defaults/router';
-import { deliveryRouter } from '../../../modules/delivery/account/infrastructure/http/routes';
-import { mobileRouter } from '../../../modules/mobile/authenticate/infrastructure/http/routes';
-import { restaurantRouter } from '../../../modules/restaurant/authenticate/infrastructure/http/routes';
-
+import { deliveryRouter } from '../../../modules/delivery/infrastructure/http/routes';
 
 const r = Router();
 // Default routes
 r.use('/', systemRouter);
 
 // App routes
-r.use('/api/delivery', deliveryRouter);
-r.use('/api/mobile', mobileRouter);
-r.use('/api/restaurant', restaurantRouter);
+r.use('/service/delivery', deliveryRouter);
+//r.use('/service/mobile', mobileRouter);
+//r.use('/service/restaurant', restaurantRouter);
 
 export { r };
-

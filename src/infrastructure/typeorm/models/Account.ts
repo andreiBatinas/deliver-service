@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Module } from './oldModels/Module';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'accounts' })
 export class Account {
@@ -42,7 +41,7 @@ export class Account {
     name: 'telephone',
     nullable: false,
   })
-  accountTelephone?: number;
+  accountTelephone?: string;
 
   @Column({
     name: 'createdAt',

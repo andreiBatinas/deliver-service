@@ -1,7 +1,10 @@
-import {
-  Request,
-  Response,
-} from 'express';
+import { Request, Response } from 'express';
+
+interface PayloadInterface<T> {
+  status?: boolean;
+  data?: any;
+  error?: any;
+}
 
 export abstract class HttpController {
   protected req!: Request;
@@ -14,6 +17,28 @@ export abstract class HttpController {
     this.res = res;
 
     await this.executeImpl();
+  }
+
+  public serviceOk<T>(res: Response, payload?: PayloadInterface<T>) {
+    let p = payload;
+    if (undefined === p) {
+      p = {} as PayloadInterface<any>;
+    }
+
+    p.status = true;
+    return res.status(200).json(p);
+  }
+
+  public serviceFail<T>(
+    res: Response,
+    payload: PayloadInterface<T>,
+    code?: number,
+  ) {
+    payload.status = false;
+    if (undefined !== code) {
+      return res.status(code).json(payload);
+    }
+    return res.status(500).json(payload);
   }
 
   public ok<T>(res: Response, dto?: T) {

@@ -10,10 +10,10 @@ export class accountMigr1625680751114 implements MigrationInterface {
         email VARCHAR ( 255 ) UNIQUE NOT NULL,
         cui varchar(30) UNIQUE NOT NULL,
         "officeAddress" VARCHAR ( 50 ) NOT NULL,
-        telephone integer NOT NULL,
+        telephone VARCHAR ( 50 ) NOT NULL,
         "createdAt" TIMESTAMP NOT NULL,
-            "updatedAt" TIMESTAMP
-    );`,
+              "updatedAt" TIMESTAMP
+      );`,
     );
   }
 

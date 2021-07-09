@@ -8,7 +8,7 @@ interface AccountProps {
   accountEmail: string;
   accountCUI: string;
   accountOfficeAddress: string;
-  accountTelephone: number;
+  accountTelephone: string;
   accountCreatedAt: string;
   accountUpdatedAt: string;
   //modules?: Module[];
@@ -49,6 +49,10 @@ export class Account extends Entity<AccountProps> {
 
   get accountCreatedAt(): string {
     return this.props.accountCreatedAt;
+  }
+
+  get accountTelephone(): string {
+    return this.props.accountTelephone;
   }
 
   constructor(props: AccountProps, id?: UniqueEntityId) {

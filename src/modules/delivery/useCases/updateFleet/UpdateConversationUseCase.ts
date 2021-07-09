@@ -11,7 +11,7 @@ import { Conversation } from '../../domain/Conversation';
 import { ConversationCampaign } from '../../domain/ConversationCampaign';
 import { ConversationMap } from '../../mappers/ConversationMap';
 import { IConversationRepo } from '../../repos/ConversationRepo';
-import { CreateConversationResponse } from '../createConversation/CreateConversationResponse';
+import { CreateConversationResponse } from '../createAccount/CreateAccountResponse';
 import { UpdateConversationDTO } from './UpdateConversationDTO';
 import { UpdateConversationErrors } from './UpdateConversationErrors';
 
