@@ -1,6 +1,5 @@
 import { Mapper } from '../../../core/infrastructure';
 import { Account } from '../domain/Account';
-import { Conversation } from '../domain/oldDomain/Conversation';
 
 export class AccountMap extends Mapper<Account> {
   public static toBackend(account: any): any {
@@ -13,6 +12,13 @@ export class AccountMap extends Mapper<Account> {
       accountCUI: account.accountCUI,
       accountCreatedAt: account.accountCreatedAt,
       accountUpdatedAt: account.accountUpdatedAt,
+    };
+  }
+
+  public static toBackendFromAuth(account: any): any {
+    return {
+      accountPassword: account.accountPassword,
+      accountEmail: account.accountEmail,
     };
   }
 
@@ -29,25 +35,25 @@ export class AccountMap extends Mapper<Account> {
     };
   }
 
-  static toDomain(raw: any): Conversation {
-    const conversationOrError = Conversation.New({
-      campaignId: raw.account_id,
-      name: raw.name,
-      conversationId: raw.conversation_id,
-    });
+  // static toDomain(raw: any): Conversation {
+  //   const conversationOrError = Conversation.New({
+  //     campaignId: raw.account_id,
+  //     name: raw.name,
+  //     conversationId: raw.conversation_id,
+  //   });
 
-    return conversationOrError.getValue() as Conversation;
-  }
+  //   return conversationOrError.getValue() as Conversation;
+  // }
 
-  static toDomainFromDb(raw: any): Conversation {
-    const conversationOrError = Conversation.New({
-      campaignId: raw.campaignId,
-      name: raw.name,
-      conversationId: raw.conversationId,
-    });
+  // static toDomainFromDb(raw: any): Conversation {
+  //   const conversationOrError = Conversation.New({
+  //     campaignId: raw.campaignId,
+  //     name: raw.name,
+  //     conversationId: raw.conversationId,
+  //   });
 
-    return conversationOrError.getValue() as Conversation;
-  }
+  //   return conversationOrError.getValue() as Conversation;
+  // }
 
   static toFrontend(raw: Account): any {
     return {
@@ -59,6 +65,12 @@ export class AccountMap extends Mapper<Account> {
       accountUpdatedAt: raw.accountUpdatedAt,
       accountOfficeAddress: raw.accountOfficeAddress,
       accountTelephone: raw.accountTelephone,
+    };
+  }
+  static toFrontEdFromAuth(raw: Account): any {
+    return {
+      accountPassword: raw.accountPassword,
+      accountEmail: raw.accountEmail,
     };
   }
 }

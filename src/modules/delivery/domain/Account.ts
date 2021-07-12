@@ -77,4 +77,18 @@ export class Account extends Entity<AccountProps> {
     const account = new Account(props, id);
     return Result.OK<Account>(account);
   }
+
+  static NewAuth(props: AccountProps, id?: UniqueEntityId): Result<Account> {
+    const validator = Validator.notNullOrUndefinedBulk([
+      { arg: props.accountEmail, argName: 'accountEmail' },
+      { arg: props.accountPassword, argName: 'accountPassword' },
+    ]);
+
+    if (false === validator.succeeded) {
+      return Result.Fail<Account>(validator.message);
+    }
+
+    const account = new Account(props, id);
+    return Result.OK<Account>(account);
+  }
 }

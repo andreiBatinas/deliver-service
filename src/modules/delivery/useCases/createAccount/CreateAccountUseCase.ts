@@ -29,7 +29,7 @@ export class CreateAccountUseCase
   }
 
   public async execute(req: CreateAccountDTO): Promise<Response> {
-    const log = new Logger('UpdateTokenUseCase');
+    const log = new Logger('CreateAccountUseCase');
 
     const c = AccountMap.toBackend(req.account);
     const accountOrError = Account.New(c);
@@ -40,21 +40,17 @@ export class CreateAccountUseCase
 
     try {
       const account = accountOrError.getValue() as Account;
-      const exist = await this.accountRepo.exists(account.accountName);
+      const exist = await this.accountRepo.exists(account.accountEmail);
 
       if (exist) {
         return wrong(
-          new CreateAccountErrors.AccountExists(account.accountName),
+          new CreateAccountErrors.AccountExists(account.accountEmail),
         ) as Response;
       }
       const r = await this.accountRepo.save(account);
 
-      // const result: CreateAccountResponse = {
-      //   result: 'okaysh',
-      //   data: ConversationMap.toFrontend(r),
-      // };
       const result: CreateAccountResponse = {
-        result: 'okaysh',
+        result: 'account created',
         data: AccountMap.toFrontend(r),
       };
 

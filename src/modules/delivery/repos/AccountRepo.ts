@@ -1,4 +1,3 @@
-import { DeleteResult } from 'typeorm';
 import { DB } from '../../../infrastructure/typeorm';
 import { Account } from '../domain/Account';
 import { AccountMap } from '../mappers/AccountMap';
@@ -8,6 +7,7 @@ export interface IAccountRepo {
   //findAccountByAccountId(accountId: string): Promise<Account | null>;
   save(account: Account): Promise<Account>;
   exists(accountEmail: string): Promise<boolean>;
+  existsAuth(accountEmail: string, accountPassword: string): Promise<boolean>;
   //findConversationsByCampaignId(campaignId: string): Promise<Account[]>;
 
   //findModulesByConversationId(conversationId: string): Promise<Account[]>;
@@ -26,6 +26,21 @@ export class AccountRepo implements IAccountRepo {
     const accountModel = this.models.Account;
     const r = await DB.getRepository(accountModel).findOne({
       accountEmail,
+    });
+    if (r !== undefined) return true;
+    return false;
+  }
+
+  public async existsAuth(
+    accountEmail: string,
+    accountPassword: string,
+  ): Promise<boolean> {
+    const accountModel = this.models.Account;
+    const r = await DB.getRepository(accountModel).findOne({
+      where: {
+        accountEmail,
+        accountPassword,
+      },
     });
     if (r !== undefined) return true;
     return false;
@@ -111,19 +126,19 @@ export class AccountRepo implements IAccountRepo {
 
   //   return [];
   // }
-  public async removeConversationByConversationId(
-    conversationId: string,
-  ): Promise<boolean> {
-    const conversationModel = this.models.Conversation;
-    const result: DeleteResult = await DB.getRepository(
-      conversationModel,
-    ).delete({ conversationId });
+  // public async removeConversationByConversationId(
+  //   conversationId: string,
+  // ): Promise<boolean> {
+  //   const conversationModel = this.models.Conversation;
+  //   const result: DeleteResult = await DB.getRepository(
+  //     conversationModel,
+  //   ).delete({ conversationId });
 
-    if (result.affected === 0) {
-      return false;
-    }
-    return true;
-  }
+  //   if (result.affected === 0) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
   // public async updateConversation(
   //   conversation: Account,
   // ): Promise<Account | null> {

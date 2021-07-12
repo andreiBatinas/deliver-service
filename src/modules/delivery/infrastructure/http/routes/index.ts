@@ -1,5 +1,9 @@
 import { Request, Response, Router } from 'express';
 import {
+  AuthenticateAccountController,
+  authenticateAccountUseCase,
+} from '../../../useCases/authenticateAccount';
+import {
   CreateAccountController,
   createAccountUseCase,
 } from '../../../useCases/createAccount';
@@ -13,6 +17,15 @@ deliveryRouter.post('/create-account', async (req: Request, res: Response) => {
   await createAccountController.execute(req, res);
 });
 
+deliveryRouter.post(
+  '/authenticate-account',
+  async (req: Request, res: Response) => {
+    const authenticateAccountController = new AuthenticateAccountController(
+      authenticateAccountUseCase,
+    );
+    await authenticateAccountController.execute(req, res);
+  },
+);
 // .post('/list-conversation', async (req: Request, res: Response) => {
 //   const listConversationController = new ListConversationController(
 //     listConversationUseCase,
