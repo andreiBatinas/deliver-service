@@ -1,28 +1,32 @@
 import { expect } from 'chai';
-import { InputTypeMap } from './InputTypeMap';
-const inputTypeId = '11111111-AAAA-1111-0000-222222222222';
+import { InputTypeUpdateMap } from '../oldMapper/InputTypeUpdateMap';
+const inputTypeId = 1002;
 const name = 'test-name';
 describe('Mappers', () => {
-  describe('InputTypeMap', () => {
+  describe('InputTypeUpdateMap', () => {
     it('toDomain should return accountId, inputTypeId and name in props', () => {
       const req = {
         name: name,
+        input_type_id: inputTypeId,
       };
       const expectedResult = {
         name: name,
+        inputTypeId: inputTypeId,
       };
-      const result = InputTypeMap.toDomain(req);
+      const result = InputTypeUpdateMap.toDomain(req);
       expect(result.props).deep.equal(expectedResult);
     });
 
     it('toPersistent should return accountId, inputTypeId and name ', () => {
       const raw: any = {
         name: name,
+        inputTypeId: inputTypeId,
       };
       const expectedResult = {
         name: name,
+        inputTypeId: inputTypeId,
       };
-      const result = InputTypeMap.toPersistent(raw);
+      const result = InputTypeUpdateMap.toPersistent(raw);
       expect(result).deep.equal(expectedResult);
     });
 
@@ -36,7 +40,7 @@ describe('Mappers', () => {
         name: name,
         modules: [],
       };
-      const result = InputTypeMap.toDomainFromDb(raw);
+      const result = InputTypeUpdateMap.toDomainFromDb(raw);
       expect(result.props).deep.equal(expectedResult);
     });
 
@@ -51,7 +55,7 @@ describe('Mappers', () => {
         name: name,
         modules: [],
       };
-      const result = InputTypeMap.toFrontend(raw);
+      const result = InputTypeUpdateMap.toFrontend(raw);
       expect(result).deep.equal(expectedResult);
     });
   });

@@ -7,10 +7,10 @@ import {
   wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
-import { CampaignId } from '../../domain/CampaignId';
-import { CampaignIdMap } from '../../mappers/CampaignIdMap';
-import { ConversationMap } from '../../mappers/ConversationMap';
-import { IConversationRepo } from '../../repos/ConversationRepo';
+import { CampaignId } from '../../domain/oldDomain/CampaignId';
+import { CampaignIdMap } from '../../mappers/oldMapper/CampaignIdMap';
+import { ConversationMap } from '../../mappers/oldMapper/ConversationMap';
+import { IConversationRepo } from '../../repos/oldRepo/ConversationRepo';
 import { ListConversationDTO } from './ListConversationDTO';
 import { ListConversationErrors } from './ListConversationErrors';
 import { ListConversationResponse } from './ListConversationResponse';
@@ -21,7 +21,8 @@ type Response = Either<
 >;
 
 export class ListConversationUseCase
-  implements UseCase<ListConversationDTO, Response> {
+  implements UseCase<ListConversationDTO, Response>
+{
   private conversationRepo: IConversationRepo;
 
   constructor(conversationRepo: IConversationRepo) {

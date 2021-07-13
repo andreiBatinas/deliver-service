@@ -7,11 +7,11 @@ import {
   wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
-import { Conversation } from '../../domain/Conversation';
-import { ConversationCampaign } from '../../domain/ConversationCampaign';
-import { ConversationMap } from '../../mappers/ConversationMap';
-import { IConversationRepo } from '../../repos/ConversationRepo';
-import { CreateConversationResponse } from '../createAccount/CreateAccountResponse';
+import { CreateConversationResponse } from '../../../conversations/useCases/createConversation/CreateConversationResponse';
+import { Conversation } from '../../domain/oldDomain/Conversation';
+import { ConversationCampaign } from '../../domain/oldDomain/ConversationCampaign';
+import { ConversationMap } from '../../mappers/oldMapper/ConversationMap';
+import { IConversationRepo } from '../../repos/oldRepo/ConversationRepo';
 import { UpdateConversationDTO } from './UpdateConversationDTO';
 import { UpdateConversationErrors } from './UpdateConversationErrors';
 
@@ -21,7 +21,8 @@ type Response = Either<
 >;
 
 export class UpdateConversationUseCase
-  implements UseCase<UpdateConversationDTO, Response> {
+  implements UseCase<UpdateConversationDTO, Response>
+{
   private conversationRepo: IConversationRepo;
 
   constructor(conversationRepo: IConversationRepo) {
@@ -39,9 +40,10 @@ export class UpdateConversationUseCase
     }
     const conversation = conversationOrError.getValue() as Conversation;
 
-    const conversationCheck = (await this.conversationRepo.findConversationByConversationId(
-      c.conversationId,
-    )) as Conversation;
+    const conversationCheck =
+      (await this.conversationRepo.findConversationByConversationId(
+        c.conversationId,
+      )) as Conversation;
     if (conversationCheck.campaignId !== c.campaignId) {
       return wrong(
         new UpdateConversationErrors.ConversationDontBelongToCampaign(

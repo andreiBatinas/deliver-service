@@ -1,7 +1,7 @@
 import { DeleteResult } from 'typeorm';
-import { DB } from '../../../infrastructure/typeorm';
-import { Module } from '../domain/oldDomain/Module';
-import { ModuleMap } from '../mappers/ModuleMap';
+import { DB } from '../../../../infrastructure/typeorm';
+import { Module } from '../../domain/oldDomain/Module';
+import { ModuleMap } from '../../mappers/oldMapper/ModuleMap';
 
 export interface IModuleRepo {
   findModuleByModuleId(moduleId: string): Promise<Module | null>;

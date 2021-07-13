@@ -1,5 +1,9 @@
 import { Request, Response, Router } from 'express';
 import {
+  AddFleetController,
+  addFleetUseCase,
+} from '../../../useCases/addFleet';
+import {
   AuthenticateAccountController,
   authenticateAccountUseCase,
 } from '../../../useCases/authenticateAccount';
@@ -53,10 +57,10 @@ deliveryRouter.post(
 //   );
 //   await updateConversationController.execute(req, res);
 // })
-// .post('/module/add-module', async (req: Request, res: Response) => {
-//   const addModuleController = new AddModuleController(addModuleUseCase);
-//   await addModuleController.execute(req, res);
-// })
+deliveryRouter.post('/add-fleet', async (req: Request, res: Response) => {
+  const addFleetController = new AddFleetController(addFleetUseCase);
+  await addFleetController.execute(req, res);
+});
 
 // .post('/module/list-module', async (req: Request, res: Response) => {
 //   const listModuleController = new ListModuleController(listModuleUseCase);

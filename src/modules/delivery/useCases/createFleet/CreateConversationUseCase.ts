@@ -7,9 +7,9 @@ import {
   wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
-import { Conversation } from '../../domain/Conversation';
-import { ConversationMap } from '../../mappers/ConversationMap';
-import { IConversationRepo } from '../../repos/ConversationRepo';
+import { Conversation } from '../../domain/oldDomain/Conversation';
+import { ConversationMap } from '../../mappers/oldMapper/ConversationMap';
+import { IConversationRepo } from '../../repos/oldRepo/ConversationRepo';
 import { CreateConversationDTO } from './CreateConversationDTO';
 import { CreateConversationErrors } from './CreateConversationErrors';
 import { CreateConversationResponse } from './CreateConversationResponse';
@@ -20,7 +20,8 @@ type Response = Either<
 >;
 
 export class CreateConversationUseCase
-  implements UseCase<CreateConversationDTO, Response> {
+  implements UseCase<CreateConversationDTO, Response>
+{
   private conversationRepo: IConversationRepo;
 
   constructor(conversationRepo: IConversationRepo) {

@@ -1,5 +1,5 @@
-import { Mapper } from '../../../core/infrastructure';
-import { Module } from '../domain/oldDomain/Module';
+import { Mapper } from '../../../../core/infrastructure';
+import { Module } from '../../domain/oldDomain/Module';
 
 export class ModuleMap extends Mapper<Module> {
   public static toPersistent(module: Module): any {

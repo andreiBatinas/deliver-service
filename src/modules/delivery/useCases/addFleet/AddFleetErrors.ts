@@ -3,7 +3,7 @@
 import { Result, UseCaseError } from '../../../../core/logic';
 import { sprintf } from '../../../../infrastructure/fmt';
 
-export namespace AddModuleErrors {
+export namespace AddFleetErrors {
   export class DataNotFound extends Result<UseCaseError> {
     constructor(token: string) {
       super(false, {
@@ -20,7 +20,7 @@ export namespace AddModuleErrors {
     }
   }
 
-  export class ModuleExists extends Result<UseCaseError> {
+  export class FleetExists extends Result<UseCaseError> {
     constructor(name: string) {
       super(false, {
         message: sprintf('Error. Module found  Got: {0}', name),

@@ -4,16 +4,16 @@ import {
   GenericErrors,
   Result,
   right,
-  wrong
+  wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
-import { ConversationId } from '../../domain/ConversationId';
-import { Module } from '../../domain/Module';
-import { ConversationIdMap } from '../../mappers/ConversationIdMap';
-import { ModuleMap } from '../../mappers/ModuleMap';
-import { IConversationRepo } from '../../repos/ConversationRepo';
-import { IModuleRepo } from '../../repos/ModuleRepo';
-import { IModuleTypeRepo } from '../../repos/ModuleTypeRepo';
+import { ConversationId } from '../../domain/oldDomain/ConversationId';
+import { Module } from '../../domain/oldDomain/Module';
+import { ConversationIdMap } from '../../mappers/oldMapper/ConversationIdMap';
+import { ModuleMap } from '../../mappers/oldMapper/ModuleMap';
+import { IConversationRepo } from '../../repos/oldRepo/ConversationRepo';
+import { IModuleRepo } from '../../repos/oldRepo/ModuleRepo';
+import { IModuleTypeRepo } from '../../repos/oldRepo/ModuleTypeRepo';
 import { AddModuleDTO } from './AddModuleDTO';
 import { AddModuleErrors } from './AddModuleErrors';
 import { AddModuleResponse } from './AddModuleResponse';

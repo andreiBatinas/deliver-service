@@ -1,5 +1,5 @@
-import { Mapper } from '../../../core/infrastructure';
-import { CampaignId } from '../domain/oldDomain/CampaignId';
+import { Mapper } from '../../../../core/infrastructure';
+import { CampaignId } from '../../domain/oldDomain/CampaignId';
 
 export class CampaignIdMap extends Mapper<CampaignId> {
   public static toPersistent(conversation: CampaignId): any {

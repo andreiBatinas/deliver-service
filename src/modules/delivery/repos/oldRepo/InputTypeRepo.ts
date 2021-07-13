@@ -1,7 +1,7 @@
-import { DB } from '../../../infrastructure/typeorm';
-import { InputType } from '../domain/oldDomain/InputType';
-import { InputTypeMap } from '../mappers/InputTypeMap';
-import { InputTypeUpdateMap } from '../mappers/InputTypeUpdateMap';
+import { DB } from '../../../../infrastructure/typeorm';
+import { InputType } from '../../domain/oldDomain/InputType';
+import { InputTypeMap } from '../../mappers/oldMapper/InputTypeMap';
+import { InputTypeUpdateMap } from '../../mappers/oldMapper/InputTypeUpdateMap';
 
 export interface IInputTypeRepo {
   findInputTypeByName(name: string): Promise<InputType | null>;

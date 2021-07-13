@@ -1,5 +1,5 @@
-import { Mapper } from '../../../core/infrastructure';
-import { InputType } from '../domain/oldDomain/InputType';
+import { Mapper } from '../../../../core/infrastructure';
+import { InputType } from '../../domain/oldDomain/InputType';
 
 export class InputTypeUpdateMap extends Mapper<InputType> {
   public static toPersistent(inputType: InputType): any {

@@ -1,5 +1,5 @@
-import { DB } from '../../../infrastructure/typeorm';
-import { ModuleType } from '../domain/oldDomain/ModuleType';
+import { DB } from '../../../../infrastructure/typeorm';
+import { ModuleType } from '../../domain/oldDomain/ModuleType';
 
 export interface IModuleTypeRepo {
   findModuleTypeById(moduleTypeId: string): Promise<ModuleType | null>;

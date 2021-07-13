@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { ModuleMap } from './ModuleMap';
+import { ModuleMap } from '../oldMapper/ModuleMap';
 const campaignId = '00000000-CCCC-1111-3333-222222222222';
 const conversationId = '11111111-AAAA-1111-0000-222222222222';
 const moduleId = '22222222-AAAA-1111-0000-222222222222';

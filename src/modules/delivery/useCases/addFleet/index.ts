@@ -1,15 +1,7 @@
-import {
-  conversationRepo,
-  moduleRepo,
-  moduleTypeRepo,
-} from '../../repos';
-import { AddModuleController } from './AddModuleController';
-import { AddModuleUseCase } from './AddModuleUseCase';
+import { fleetRepo } from '../../repos';
+import { AddFleetController } from './AddFleetController';
+import { AddFleetUseCase } from './AddFleetUseCase';
 
-const addModuleUseCase = new AddModuleUseCase(
-  moduleRepo,
-  conversationRepo,
-  moduleTypeRepo,
-);
+const addFleetUseCase = new AddFleetUseCase(fleetRepo);
 
-export { addModuleUseCase, AddModuleController };
+export { addFleetUseCase, AddFleetController };

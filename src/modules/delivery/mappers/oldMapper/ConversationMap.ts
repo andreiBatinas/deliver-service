@@ -1,5 +1,5 @@
-import { Mapper } from '../../../core/infrastructure';
-import { Conversation } from '../domain/oldDomain/Conversation';
+import { Mapper } from '../../../../core/infrastructure';
+import { Conversation } from '../../domain/oldDomain/Conversation';
 
 export class ConversationMap extends Mapper<Conversation> {
   public static toPersistent(conversation: Conversation): any {

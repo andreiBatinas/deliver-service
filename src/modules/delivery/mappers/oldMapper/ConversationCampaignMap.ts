@@ -1,5 +1,5 @@
-import { Mapper } from '../../../core/infrastructure';
-import { Conversation } from '../domain/oldDomain/Conversation';
+import { Mapper } from '../../../../core/infrastructure';
+import { Conversation } from '../../domain/oldDomain/Conversation';
 
 export interface IConversationCampaignMap {
   conversationId: string;

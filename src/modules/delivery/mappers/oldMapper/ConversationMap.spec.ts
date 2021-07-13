@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { ConversationMap } from './ConversationMap';
+import { ConversationMap } from '../oldMapper/ConversationMap';
 const campaignId = '00000000-CCCC-1111-3333-222222222222';
 const conversationId = '11111111-AAAA-1111-0000-222222222222';
 const name = 'test-name';

@@ -7,11 +7,11 @@ import {
   wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
-import { Conversation } from '../../domain/Conversation';
-import { ConversationCampaign } from '../../domain/ConversationCampaign';
-import { ConversationId } from '../../domain/ConversationId';
-import { ConversationCampaignMap } from '../../mappers/ConversationCampaignMap';
-import { IConversationRepo } from '../../repos/ConversationRepo';
+import { Conversation } from '../../domain/oldDomain/Conversation';
+import { ConversationCampaign } from '../../domain/oldDomain/ConversationCampaign';
+import { ConversationId } from '../../domain/oldDomain/ConversationId';
+import { ConversationCampaignMap } from '../../mappers/oldMapper/ConversationCampaignMap';
+import { IConversationRepo } from '../../repos/oldRepo/ConversationRepo';
 import { RemoveConversationDTO } from './RemoveConversationDTO';
 import { RemoveConversationErrors } from './RemoveConversationErrors';
 
@@ -21,7 +21,8 @@ type Response = Either<
 >;
 
 export class RemoveConversationUseCase
-  implements UseCase<RemoveConversationDTO, Response> {
+  implements UseCase<RemoveConversationDTO, Response>
+{
   private conversationRepo: IConversationRepo;
 
   constructor(conversationRepo: IConversationRepo) {
@@ -40,9 +41,10 @@ export class RemoveConversationUseCase
       ) as Response;
     }
     try {
-      const conversation = (await this.conversationRepo.findConversationByConversationId(
-        c.conversationId,
-      )) as Conversation;
+      const conversation =
+        (await this.conversationRepo.findConversationByConversationId(
+          c.conversationId,
+        )) as Conversation;
       if (conversation.campaignId !== c.campaignId) {
         return wrong(
           new RemoveConversationErrors.ConversationDontBelongToCampaign(
@@ -51,9 +53,10 @@ export class RemoveConversationUseCase
           ),
         ) as Response;
       }
-      const response = await this.conversationRepo.removeConversationByConversationId(
-        c.conversationId,
-      );
+      const response =
+        await this.conversationRepo.removeConversationByConversationId(
+          c.conversationId,
+        );
       if (response === false) {
         return wrong(
           new RemoveConversationErrors.UnknownError(c.conversationId),

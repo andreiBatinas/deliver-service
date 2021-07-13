@@ -1,8 +1,7 @@
 import { DeleteResult } from 'typeorm';
-
-import { DB } from '../../../infrastructure/typeorm';
-import { Conversation } from '../domain/oldDomain/Conversation';
-import { ConversationMap } from '../mappers/ConversationMap';
+import { DB } from '../../../../infrastructure/typeorm';
+import { Conversation } from '../../domain/oldDomain/Conversation';
+import { ConversationMap } from '../../mappers/oldMapper/ConversationMap';
 
 export interface IConversationRepo {
   findConversationByConversationName(
@@ -27,9 +26,12 @@ export class ConversationRepo implements IConversationRepo {
     this.models = models;
   }
 
-  public async exists(name: string,  campaignId: string): Promise<boolean> {
+  public async exists(name: string, campaignId: string): Promise<boolean> {
     const conversationModel = this.models.Conversation;
-    const r = await DB.getRepository(conversationModel).findOne({ name, campaignId });
+    const r = await DB.getRepository(conversationModel).findOne({
+      name,
+      campaignId,
+    });
     return !!r === true;
   }
 
@@ -128,18 +130,18 @@ export class ConversationRepo implements IConversationRepo {
   ): Promise<Conversation | null> {
     const conversationModel = this.models.Conversation;
     const rawConversation = ConversationMap.toPersistent(conversation);
-      const criteria = { conversationId: rawConversation.conversationId };
+    const criteria = { conversationId: rawConversation.conversationId };
 
-      const propertiesToUpdate = {
-        name: rawConversation.name,
-      };
-      const result = await DB.getRepository(conversationModel).update(
-        criteria,
-        propertiesToUpdate,
-      );
-      if (undefined === result) {
-        return null;
-      }
-      return rawConversation;
+    const propertiesToUpdate = {
+      name: rawConversation.name,
+    };
+    const result = await DB.getRepository(conversationModel).update(
+      criteria,
+      propertiesToUpdate,
+    );
+    if (undefined === result) {
+      return null;
+    }
+    return rawConversation;
   }
 }

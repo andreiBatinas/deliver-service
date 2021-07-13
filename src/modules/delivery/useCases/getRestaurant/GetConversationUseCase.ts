@@ -7,11 +7,11 @@ import {
   wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
-import { Conversation } from '../../domain/Conversation';
-import { ConversationId } from '../../domain/ConversationId';
-import { ConversationIdMap } from '../../mappers/ConversationIdMap';
-import { ConversationMap } from '../../mappers/ConversationMap';
-import { IConversationRepo } from '../../repos/ConversationRepo';
+import { Conversation } from '../../domain/oldDomain/Conversation';
+import { ConversationId } from '../../domain/oldDomain/ConversationId';
+import { ConversationIdMap } from '../../mappers/oldMapper/ConversationIdMap';
+import { ConversationMap } from '../../mappers/oldMapper/ConversationMap';
+import { IConversationRepo } from '../../repos/oldRepo/ConversationRepo';
 import { GetConversationDTO } from './GetConversationDTO';
 import { GetConversationErrors } from './GetConversationErrors';
 import { GetConversationResponse } from './GetConversationResponse';
@@ -22,7 +22,8 @@ type Response = Either<
 >;
 
 export class GetConversationUseCase
-  implements UseCase<GetConversationDTO, Response> {
+  implements UseCase<GetConversationDTO, Response>
+{
   private conversationRepo: IConversationRepo;
 
   constructor(conversationRepo: IConversationRepo) {
@@ -43,9 +44,10 @@ export class GetConversationUseCase
     }
 
     try {
-      const coversationFromDb = await this.conversationRepo.findConversationByConversationId(
-        c.conversationId,
-      );
+      const coversationFromDb =
+        await this.conversationRepo.findConversationByConversationId(
+          c.conversationId,
+        );
       const data = ConversationMap.toFrontend(
         coversationFromDb as Conversation,
       );
