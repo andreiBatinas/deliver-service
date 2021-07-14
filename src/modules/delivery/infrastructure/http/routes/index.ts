@@ -1,4 +1,9 @@
-import { Request, Response, Router } from 'express';
+import {
+  Request,
+  Response,
+  Router,
+} from 'express';
+
 import {
   AddFleetController,
   addFleetUseCase,
@@ -11,6 +16,10 @@ import {
   CreateAccountController,
   createAccountUseCase,
 } from '../../../useCases/createAccount';
+import {
+  RemoveFleetController,
+  removeFleetUseCase,
+} from '../../../useCases/removeFleet';
 
 const deliveryRouter = Router();
 
@@ -67,12 +76,10 @@ deliveryRouter.post('/add-fleet', async (req: Request, res: Response) => {
 //   await listModuleController.execute(req, res);
 // })
 
-// .post('/module/remove-module', async (req: Request, res: Response) => {
-//   const removeModuleController = new RemoveModuleController(
-//     removeModuleUseCase,
-//   );
-//   await removeModuleController.execute(req, res);
-// })
+deliveryRouter.post('/remove-fleet', async (req: Request, res: Response) => {
+  const removeFleetController = new RemoveFleetController(removeFleetUseCase);
+  await removeFleetController.execute(req, res);
+});
 
 // .post('/module/update-module', async (req: Request, res: Response) => {
 //   const updateModuleController = new UpdateModuleController(

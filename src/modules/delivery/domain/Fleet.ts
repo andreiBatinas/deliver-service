@@ -1,5 +1,11 @@
-import { Entity, UniqueEntityId } from '../../../core/domain';
-import { Result, Validator } from '../../../core/logic';
+import {
+  Entity,
+  UniqueEntityId,
+} from '../../../core/domain';
+import {
+  Result,
+  Validator,
+} from '../../../core/logic';
 
 interface FleetProps {
   fleetId?: number;
@@ -28,16 +34,16 @@ export class Fleet extends Entity<FleetProps> {
     return this.props.fleetLocation;
   }
 
-  get accountId(): number {
-    return this.props.accountId;
+  get fleetCreatedAt(): string {
+    return this.props.fleetCreatedAt;
   }
 
   get fleetUpdatedAt(): string {
     return this.props.fleetUpdatedAt;
   }
 
-  get fleetCreatedAt(): string {
-    return this.props.fleetCreatedAt;
+  get accountId(): number {
+    return this.props.accountId;
   }
 
   constructor(props: FleetProps, id?: UniqueEntityId) {

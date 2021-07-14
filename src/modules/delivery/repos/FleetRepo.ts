@@ -1,16 +1,18 @@
+import { DeleteResult } from 'typeorm';
+
 import { DB } from '../../../infrastructure/typeorm';
 import { Fleet } from '../domain/Fleet';
 import { FleetMap } from '../mappers/FleetMap';
 
 export interface IFleetRepo {
   //findAccountByAccountName(name: string): Promise<Account | null>;
-  //findAccountByAccountId(accountId: string): Promise<Account | null>;
+  findFleetByFleetId(fleetId: number): Promise<Fleet | null>;
   save(fleet: Fleet): Promise<Fleet>;
   exists(fleetName: string): Promise<boolean>;
   //findConversationsByCampaignId(campaignId: string): Promise<Account[]>;
 
   //findModulesByConversationId(conversationId: string): Promise<Account[]>;
-  //removeAccountByAccountId(accountId: string): Promise<boolean>;
+  removeFleetByFleetId(fleetId: number): Promise<boolean>;
   //updateAccount(account: Account): Promise<Account | null>;
 }
 
@@ -53,9 +55,9 @@ export class FleetRepo implements IFleetRepo {
 
     c.fleetName = rawFleet.fleetName;
     c.fleetLocation = rawFleet.fleetLocation;
-    c.accountId = rawFleet.accountId;
     c.fleetCreatedAt = rawFleet.fleetCreatedAt;
     c.fleetUpdatedAt = rawFleet.fleetUpdatedAt;
+    c.accountId = rawFleet.accountId;
 
     const fleetResult = await fleetRepo.save(c);
     return fleetResult;
@@ -77,22 +79,20 @@ export class FleetRepo implements IFleetRepo {
 
   //   return conversationList;
   // }
-  // public async findAccountByAccountId(
-  //   accountId: string,
-  // ): Promise<Account | null> {
-  //   const accountModel = this.models.Account;
-  //   const account = await DB.getRepository(accountModel).findOne({
-  //     where: {
-  //       accountId,
-  //     },
-  //     relations: ['modules'],
-  //   });
+  public async findFleetByFleetId(fleetId: number): Promise<Fleet | null> {
+    const fleetModel = this.models.Fleet;
+    const fleet = await DB.getRepository(fleetModel).findOne({
+      where: {
+        fleetId,
+      },
+      //relations: ['modules'],
+    });
 
-  //   if (undefined === account) {
-  //     return null;
-  //   }
-  //   return account as Account;
-  // }
+    if (undefined === fleet) {
+      return null;
+    }
+    return fleet as Fleet;
+  }
 
   // public async findModulesByConversationId(
   //   conversationId: string,
@@ -107,19 +107,17 @@ export class FleetRepo implements IFleetRepo {
 
   //   return [];
   // }
-  // public async removeConversationByConversationId(
-  //   conversationId: string,
-  // ): Promise<boolean> {
-  //   const conversationModel = this.models.Conversation;
-  //   const result: DeleteResult = await DB.getRepository(
-  //     conversationModel,
-  //   ).delete({ conversationId });
+  public async removeFleetByFleetId(fleetId: number): Promise<boolean> {
+    const fleetModel = this.models.Fleet;
+    const result: DeleteResult = await DB.getRepository(fleetModel).delete({
+      fleetId,
+    });
 
-  //   if (result.affected === 0) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+    if (result.affected === 0) {
+      return false;
+    }
+    return true;
+  }
   // public async updateConversation(
   //   conversation: Account,
   // ): Promise<Account | null> {

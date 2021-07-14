@@ -1,7 +1,7 @@
-import { conversationRepo } from '../../repos';
-import { RemoveConversationController } from './RemoveConversationController';
-import { RemoveConversationUseCase } from './RemoveConversationUseCase';
+import { fleetRepo } from '../../repos';
+import { RemoveFleetController } from './RemoveFleetController';
+import { RemoveFleetUseCase } from './RemoveFleetUseCase';
 
-const removeConversationUseCase = new RemoveConversationUseCase(conversationRepo);
+const removeFleetUseCase = new RemoveFleetUseCase(fleetRepo);
 
-export { removeConversationUseCase, RemoveConversationController };
+export { removeFleetUseCase, RemoveFleetController };

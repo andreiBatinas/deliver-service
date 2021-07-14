@@ -3,7 +3,7 @@
 import { Result, UseCaseError } from '../../../../core/logic';
 import { sprintf } from '../../../../infrastructure/fmt';
 
-export namespace RemoveConversationErrors {
+export namespace RemoveFleetErrors {
   export class TokenNotFound extends Result<UseCaseError> {
     constructor(token: string) {
       super(false, {
@@ -19,11 +19,13 @@ export namespace RemoveConversationErrors {
       });
     }
   }
-  export class ConversationDontBelongToCampaign extends Result<UseCaseError> {
-    constructor(conversationId: string, campaignId: string) {
-      super(false, {
-        message: sprintf(`Error. The conversation ${conversationId} doesn't belong to campaign ${campaignId}`),
-      });
-    }
-  }
+  // export class ConversationDontBelongToCampaign extends Result<UseCaseError> {
+  //   constructor(conversationId: string, campaignId: string) {
+  //     super(false, {
+  //       message: sprintf(
+  //         `Error. The conversation ${conversationId} doesn't belong to campaign ${campaignId}`,
+  //       ),
+  //     });
+  //   }
+  // }
 }
