@@ -1,8 +1,7 @@
-import { conversationRepo } from '../../repos';
-import { GetConversationController } from './GetConversationController';
-import { GetConversationUseCase } from './GetConversationUseCase';
+import { fleetRepo } from '../../repos';
+import { GetFleetController } from './GetFleetController';
+import { GetFleetUseCase } from './GetFleetUseCase';
 
+const getFleetUseCase = new GetFleetUseCase(fleetRepo);
 
-const getConversationUseCase = new GetConversationUseCase(conversationRepo);
-
-export { getConversationUseCase, GetConversationController };
+export { getFleetUseCase, GetFleetController };

@@ -16,6 +16,8 @@ import {
   CreateAccountController,
   createAccountUseCase,
 } from '../../../useCases/createAccount';
+import { getFleetUseCase } from '../../../useCases/getFleet';
+import { GetFleetController } from '../../../useCases/getFleet/GetFleetController';
 import {
   RemoveFleetController,
   removeFleetUseCase,
@@ -48,12 +50,10 @@ deliveryRouter.post(
 //   await listConversationController.execute(req, res);
 // })
 
-// .post('/get-conversation', async (req: Request, res: Response) => {
-//   const getConversationController = new GetConversationController(
-//     getConversationUseCase,
-//   );
-//   await getConversationController.execute(req, res);
-// })
+deliveryRouter.post('/get-fleet', async (req: Request, res: Response) => {
+  const getFleetController = new GetFleetController(getFleetUseCase);
+  await getFleetController.execute(req, res);
+});
 
 // .post('/remove-conversation', async (req: Request, res: Response) => {
 //   const removeModuleController = new RemoveConversationController(

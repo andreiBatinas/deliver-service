@@ -122,7 +122,7 @@ export class FleetRepo implements IFleetRepo {
     const fleetModel = this.models.Fleet;
     const rawFleet = FleetMap.toPersistent(fleet);
     const criteria = { fleetId: fleet.fleetId };
-    const propertiesToUpdate: any = {};
+    const propertiesToUpdate: any = { fleetUpdatedAt: new Date() };
     if (rawFleet.fleetName) {
       propertiesToUpdate['fleetName'] = rawFleet.fleetName;
     }
