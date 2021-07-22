@@ -1,9 +1,7 @@
-import { conversationRepo } from '../../repos';
-import { UpdateConversationController } from './UpdateConversationController';
-import { UpdateConversationUseCase } from './UpdateConversationUseCase';
+import { fleetRepo } from '../../repos';
+import { UpdateFleetController } from './UpdateFleetController';
+import { UpdateFleetUseCase } from './UpdateFleetUseCase';
 
-const updateConversationUseCase = new UpdateConversationUseCase(
-  conversationRepo,
-);
+const updateFleetUseCase = new UpdateFleetUseCase(fleetRepo);
 
-export { updateConversationUseCase, UpdateConversationController };
+export { updateFleetUseCase, UpdateFleetController };

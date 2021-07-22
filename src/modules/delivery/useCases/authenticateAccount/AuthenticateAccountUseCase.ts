@@ -31,8 +31,8 @@ export class AuthenticateAccountUseCase
   public async execute(req: AuthenticateAccountDTO): Promise<Response> {
     const log = new Logger('AuthenticateAccountUseCase');
 
-    const c = AccountMap.toBackend(req.accountAuth);
-    const accountOrError = Account.NewAuth(c);
+    const a = AccountMap.toBackend(req.accountAuth);
+    const accountOrError = Account.NewAuth(a);
 
     if (accountOrError.isFailure) {
       return wrong(Result.Fail<Account>(accountOrError.error)) as Response;
@@ -58,6 +58,7 @@ export class AuthenticateAccountUseCase
 
       return right(Result.OK<AuthenticateAccountResponse>(result)) as Response;
     } catch (e) {
+      log.error(`[HTTP][Error] ${e.details}`, 'error');
       return wrong(new AuthenticateAccountErrors.UnknownError(e)) as Response;
     }
   }

@@ -13,7 +13,7 @@ export interface IFleetRepo {
 
   //findModulesByConversationId(conversationId: string): Promise<Account[]>;
   removeFleetByFleetId(fleetId: number): Promise<boolean>;
-  //updateAccount(account: Account): Promise<Account | null>;
+  updateFleet(fleet: Fleet): Promise<Fleet | null>;
 }
 
 export class FleetRepo implements IFleetRepo {
@@ -118,23 +118,25 @@ export class FleetRepo implements IFleetRepo {
     }
     return true;
   }
-  // public async updateConversation(
-  //   conversation: Account,
-  // ): Promise<Account | null> {
-  //   const conversationModel = this.models.Conversation;
-  //   const rawConversation = ConversationMap.toPersistent(conversation);
-  //   const criteria = { conversationId: rawConversation.conversationId };
+  public async updateFleet(fleet: Fleet): Promise<Fleet | null> {
+    const fleetModel = this.models.Fleet;
+    const rawFleet = FleetMap.toPersistent(fleet);
+    const criteria = { fleetId: fleet.fleetId };
+    const propertiesToUpdate: any = {};
+    if (rawFleet.fleetName) {
+      propertiesToUpdate['fleetName'] = rawFleet.fleetName;
+    }
+    if (rawFleet.fleetLocation) {
+      propertiesToUpdate['fleetLocation'] = rawFleet.fleetLocation;
+    }
 
-  //   const propertiesToUpdate = {
-  //     name: rawConversation.name,
-  //   };
-  //   const result = await DB.getRepository(conversationModel).update(
-  //     criteria,
-  //     propertiesToUpdate,
-  //   );
-  //   if (undefined === result) {
-  //     return null;
-  //   }
-  //   return rawConversation;
-  // }
+    const result = await DB.getRepository(fleetModel).update(
+      criteria,
+      propertiesToUpdate,
+    );
+    if (undefined === result) {
+      return null;
+    }
+    return rawFleet;
+  }
 }

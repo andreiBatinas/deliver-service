@@ -29,8 +29,8 @@ export class AddFleetUseCase implements UseCase<AddFleetDTO, Response> {
   public async execute(req: AddFleetDTO): Promise<Response> {
     const log = new Logger('AddFleetUseCase');
 
-    const c = FleetMap.toBackend(req.fleet);
-    const fleetOrError = Fleet.New(c);
+    const f = FleetMap.toBackend(req.fleet);
+    const fleetOrError = Fleet.New(f);
 
     if (fleetOrError.isFailure) {
       return wrong(Result.Fail<Fleet>(fleetOrError.error)) as Response;

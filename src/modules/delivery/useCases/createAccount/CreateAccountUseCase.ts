@@ -31,8 +31,8 @@ export class CreateAccountUseCase
   public async execute(req: CreateAccountDTO): Promise<Response> {
     const log = new Logger('CreateAccountUseCase');
 
-    const c = AccountMap.toBackend(req.account);
-    const accountOrError = Account.New(c);
+    const a = AccountMap.toBackend(req.account);
+    const accountOrError = Account.New(a);
 
     if (accountOrError.isFailure) {
       return wrong(Result.Fail<Account>(accountOrError.error)) as Response;
@@ -56,6 +56,7 @@ export class CreateAccountUseCase
 
       return right(Result.OK<CreateAccountResponse>(result)) as Response;
     } catch (e) {
+      log.error(`[HTTP][Error] ${e.details}`, 'error');
       return wrong(new CreateAccountErrors.UnknownError(e)) as Response;
     }
   }

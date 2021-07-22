@@ -20,6 +20,8 @@ import {
   RemoveFleetController,
   removeFleetUseCase,
 } from '../../../useCases/removeFleet';
+import { updateFleetUseCase } from '../../../useCases/updateFleet';
+import { UpdateFleetController } from '../../../useCases/updateFleet/UpdateFleetController';
 
 const deliveryRouter = Router();
 
@@ -60,12 +62,10 @@ deliveryRouter.post(
 //   await removeModuleController.execute(req, res);
 // })
 
-// .post('/update-conversation', async (req: Request, res: Response) => {
-//   const updateConversationController = new UpdateConversationController(
-//     updateConversationUseCase,
-//   );
-//   await updateConversationController.execute(req, res);
-// })
+deliveryRouter.post('/update-fleet', async (req: Request, res: Response) => {
+  const updateFleetController = new UpdateFleetController(updateFleetUseCase);
+  await updateFleetController.execute(req, res);
+});
 deliveryRouter.post('/add-fleet', async (req: Request, res: Response) => {
   const addFleetController = new AddFleetController(addFleetUseCase);
   await addFleetController.execute(req, res);

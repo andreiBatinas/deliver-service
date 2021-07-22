@@ -30,8 +30,8 @@ export class RemoveFleetUseCase implements UseCase<RemoveFleetDTO, Response> {
   public async execute(req: RemoveFleetDTO): Promise<Response> {
     const log = new Logger('RemoveFleetUseCase');
 
-    const c = FleetIdMap.toBackend(req.fleet);
-    const fleetOrError = FleetId.New(c);
+    const f = FleetIdMap.toBackend(req.fleet);
+    const fleetOrError = FleetId.New(f);
 
     if (fleetOrError.isFailure) {
       return wrong(Result.Fail<FleetId>(fleetOrError.error)) as Response;

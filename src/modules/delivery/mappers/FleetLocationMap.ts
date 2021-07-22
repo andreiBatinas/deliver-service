@@ -1,21 +1,15 @@
 import { Mapper } from '../../../core/infrastructure';
 import { Fleet } from '../domain/Fleet';
 
-export class FleetMap extends Mapper<Fleet> {
+export class FleetLocationMap extends Mapper<Fleet> {
   public static toBackend(fleet: any): any {
     return {
-      fleetId: fleet.fleetId,
-      fleetName: fleet.fleetName,
       fleetLocation: fleet.fleetLocation,
-      fleetCreatedAt: fleet.fleetCreatedAt,
-      fleetUpdatedAt: fleet.fleetUpdatedAt,
-      accountId: fleet.accountId,
     };
   }
 
   public static toPersistent(fleet: any): any {
     return {
-      fleetName: fleet.fleetName,
       fleetLocation: fleet.fleetLocation,
     };
   }
@@ -40,13 +34,9 @@ export class FleetMap extends Mapper<Fleet> {
   //   return conversationOrError.getValue() as Conversation;
   // }
 
-  static toFrontend(raw: Fleet): any {
+  static toFrontend(raw: any): any {
     return {
-      fleetName: raw.fleetName,
       fleetLocation: raw.fleetLocation,
-      fleetCreatedAt: raw.fleetCreatedAt,
-      fleetUpdatedAt: raw.fleetUpdatedAt,
-      accountId: raw.accountId,
     };
   }
 }
