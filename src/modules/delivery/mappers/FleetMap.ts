@@ -17,6 +17,9 @@ export class FleetMap extends Mapper<Fleet> {
     return {
       fleetName: fleet.fleetName,
       fleetLocation: fleet.fleetLocation,
+      fleetCreatedAt: fleet.fleetCreatedAt,
+      fleetUpdatedAt: fleet.fleetUpdatedAt,
+      accountId: fleet.accountId,
     };
   }
 
@@ -30,15 +33,17 @@ export class FleetMap extends Mapper<Fleet> {
   //   return conversationOrError.getValue() as Conversation;
   // }
 
-  // static toDomainFromDb(raw: any): Conversation {
-  //   const conversationOrError = Conversation.New({
-  //     campaignId: raw.campaignId,
-  //     name: raw.name,
-  //     conversationId: raw.conversationId,
-  //   });
+  static toDomainFromDb(raw: any): Fleet {
+    const fleetOrError = Fleet.New({
+      accountId: raw.accountId,
+      fleetName: raw.fleetName,
+      fleetLocation: raw.fleetLocation,
+      fleetCreatedAt: raw.fleetCreatedAt,
+      fleetUpdatedAt: raw.fleetUpdatedAt,
+    });
 
-  //   return conversationOrError.getValue() as Conversation;
-  // }
+    return fleetOrError.getValue() as Fleet;
+  }
 
   static toFrontend(raw: Fleet): any {
     return {

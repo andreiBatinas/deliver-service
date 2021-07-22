@@ -56,6 +56,8 @@ export class Fleet extends Entity<FleetProps> {
       { arg: props.fleetName, argName: 'fleetName' },
       { arg: props.fleetLocation, argName: 'fleetLocation' },
       { arg: props.accountId, argName: 'accountId' },
+      { arg: props.fleetCreatedAt, argName: 'fleetCreatedAt' },
+      //{ arg: props.fleetUpdatedAt, argName: 'fleetUpdatedAt' },
     ]);
 
     if (false === validator.succeeded) {

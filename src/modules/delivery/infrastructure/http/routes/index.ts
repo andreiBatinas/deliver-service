@@ -19,6 +19,10 @@ import {
 import { getFleetUseCase } from '../../../useCases/getFleet';
 import { GetFleetController } from '../../../useCases/getFleet/GetFleetController';
 import {
+  ListFleetController,
+  listFleetUseCase,
+} from '../../../useCases/listFleet';
+import {
   RemoveFleetController,
   removeFleetUseCase,
 } from '../../../useCases/removeFleet';
@@ -50,11 +54,6 @@ deliveryRouter.post(
 //   await listConversationController.execute(req, res);
 // })
 
-deliveryRouter.post('/get-fleet', async (req: Request, res: Response) => {
-  const getFleetController = new GetFleetController(getFleetUseCase);
-  await getFleetController.execute(req, res);
-});
-
 // .post('/remove-conversation', async (req: Request, res: Response) => {
 //   const removeModuleController = new RemoveConversationController(
 //     removeConversationUseCase,
@@ -62,19 +61,25 @@ deliveryRouter.post('/get-fleet', async (req: Request, res: Response) => {
 //   await removeModuleController.execute(req, res);
 // })
 
+deliveryRouter.post('/get-fleet', async (req: Request, res: Response) => {
+  const getFleetController = new GetFleetController(getFleetUseCase);
+  await getFleetController.execute(req, res);
+});
+
 deliveryRouter.post('/update-fleet', async (req: Request, res: Response) => {
   const updateFleetController = new UpdateFleetController(updateFleetUseCase);
   await updateFleetController.execute(req, res);
 });
+
 deliveryRouter.post('/add-fleet', async (req: Request, res: Response) => {
   const addFleetController = new AddFleetController(addFleetUseCase);
   await addFleetController.execute(req, res);
 });
 
-// .post('/module/list-module', async (req: Request, res: Response) => {
-//   const listModuleController = new ListModuleController(listModuleUseCase);
-//   await listModuleController.execute(req, res);
-// })
+deliveryRouter.post('/list-fleet', async (req: Request, res: Response) => {
+  const listFleetController = new ListFleetController(listFleetUseCase);
+  await listFleetController.execute(req, res);
+});
 
 deliveryRouter.post('/remove-fleet', async (req: Request, res: Response) => {
   const removeFleetController = new RemoveFleetController(removeFleetUseCase);

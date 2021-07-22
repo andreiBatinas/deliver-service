@@ -9,7 +9,7 @@ export interface IFleetRepo {
   findFleetByFleetId(fleetId: number): Promise<Fleet | null>;
   save(fleet: Fleet): Promise<Fleet>;
   exists(fleetName: string): Promise<boolean>;
-  //findConversationsByCampaignId(campaignId: string): Promise<Account[]>;
+  findFleetsByAccountId(accountId: number): Promise<Fleet[]>;
 
   //findModulesByConversationId(conversationId: string): Promise<Account[]>;
   removeFleetByFleetId(fleetId: number): Promise<boolean>;
@@ -63,22 +63,21 @@ export class FleetRepo implements IFleetRepo {
     return fleetResult;
   }
 
-  // public async findConversationsByCampaignId(
-  //   campaignId: string,
-  // ): Promise<Account[]> {
-  //   const conversationModel = this.models.Conversation;
-  //   const r = await DB.getRepository(conversationModel).find({
-  //     where: {
-  //       campaignId,
-  //     },
-  //   });
+  public async findFleetsByAccountId(accountId: number): Promise<Fleet[]> {
+    const fleetModel = this.models.Fleet;
+    const r = await DB.getRepository(fleetModel).find({
+      where: {
+        accountId,
+      },
+    });
 
-  //   const conversationList = r.map((entry: any) => {
-  //     return ConversationMap.toDomainFromDb(entry);
-  //   });
+    const fleetList = r.map((entry: any) => {
+      return FleetMap.toDomainFromDb(entry);
+    });
 
-  //   return conversationList;
-  // }
+    return fleetList;
+  }
+
   public async findFleetByFleetId(fleetId: number): Promise<Fleet | null> {
     const fleetModel = this.models.Fleet;
     const fleet = await DB.getRepository(fleetModel).findOne({

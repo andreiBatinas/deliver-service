@@ -1,7 +1,7 @@
-import { conversationRepo } from '../../repos';
-import { ListConversationController } from './ListConversationController';
-import { ListConversationUseCase } from './ListConversationUseCase';
+import { fleetRepo } from '../../repos';
+import { ListFleetController } from './ListFleetController';
+import { ListFleetUseCase } from './ListFleetUseCase';
 
-const listConversationUseCase = new ListConversationUseCase(conversationRepo);
+const listFleetUseCase = new ListFleetUseCase(fleetRepo);
 
-export { listConversationUseCase, ListConversationController };
+export { listFleetUseCase, ListFleetController };
