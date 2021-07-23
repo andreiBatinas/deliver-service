@@ -30,7 +30,7 @@ export class ListFleetUseCase implements UseCase<ListFleetDTO, Response> {
   }
 
   public async execute(req: ListFleetDTO): Promise<Response> {
-    const log = new Logger('GetFleetUseCase');
+    const log = new Logger('ListFleetUseCase');
 
     const a = AccountIdMap.toBackend(req.fleet);
     const accountIdOrError = AccountId.New(a);

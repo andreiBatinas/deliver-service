@@ -31,6 +31,10 @@ import {
   listFleetUseCase,
 } from '../../../useCases/listFleet';
 import {
+  ListUserController,
+  listUserUseCase,
+} from '../../../useCases/listUser';
+import {
   RemoveFleetController,
   removeFleetUseCase,
 } from '../../../useCases/removeFleet';
@@ -40,6 +44,10 @@ import {
 } from '../../../useCases/removeUser';
 import { updateFleetUseCase } from '../../../useCases/updateFleet';
 import { UpdateFleetController } from '../../../useCases/updateFleet/UpdateFleetController';
+import {
+  UpdateUserController,
+  updateUserUseCase,
+} from '../../../useCases/updateUser';
 
 const deliveryRouter = Router();
 
@@ -100,6 +108,16 @@ deliveryRouter.post('/remove-user', async (req: Request, res: Response) => {
 deliveryRouter.post('/get-user', async (req: Request, res: Response) => {
   const getUserController = new GetUserController(getUserUseCase);
   await getUserController.execute(req, res);
+});
+
+deliveryRouter.post('/list-user', async (req: Request, res: Response) => {
+  const listUserController = new ListUserController(listUserUseCase);
+  await listUserController.execute(req, res);
+});
+
+deliveryRouter.post('/update-user', async (req: Request, res: Response) => {
+  const updateUserController = new UpdateUserController(updateUserUseCase);
+  await updateUserController.execute(req, res);
 });
 
 export { deliveryRouter };

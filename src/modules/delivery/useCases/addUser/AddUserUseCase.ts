@@ -19,7 +19,7 @@ type Response = Either<
   Result<void>
 >;
 
-export class AddFleetUseCase implements UseCase<AddUserDTO, Response> {
+export class AddUserUseCase implements UseCase<AddUserDTO, Response> {
   private userRepo: IUserRepo;
 
   constructor(userRepo: IUserRepo) {

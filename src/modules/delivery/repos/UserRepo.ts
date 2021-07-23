@@ -9,7 +9,7 @@ export interface IUserRepo {
   findUserByUserId(userId: number): Promise<User | null>;
   save(user: User): Promise<User>;
   exists(userEmail: string): Promise<boolean>;
-  findUsersByFleetId(userId: number): Promise<User[]>;
+  findUsersByFleetId(fleetId: number): Promise<User[]>;
 
   //findModulesByConversationId(conversationId: string): Promise<Account[]>;
   removeUserByUserId(userId: number): Promise<boolean>;
@@ -67,11 +67,11 @@ export class UserRepo implements IUserRepo {
     return userResult;
   }
 
-  public async findUsersByFleetId(userId: number): Promise<User[]> {
+  public async findUsersByFleetId(fleetId: number): Promise<User[]> {
     const userModel = this.models.User;
     const r = await DB.getRepository(userModel).find({
       where: {
-        userId,
+        fleetId,
       },
     });
 

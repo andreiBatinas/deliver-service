@@ -1,8 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Connection, createConnection, getConnection } from 'typeorm';
+import {
+  Connection,
+  createConnection,
+  getConnection,
+} from 'typeorm';
+
 import { Configuration } from '../../config/Config';
 import { Logger } from '../logger';
-import { Account, Fleet } from './models';
+import {
+  Account,
+  Fleet,
+  User,
+} from './models';
 
 // eslint-disable-next-line no-shadow
 enum DatabaseError {
@@ -24,7 +33,7 @@ async function ConnectDatabase(log: Logger) {
       database: Configuration.db.database,
       logging: Configuration.db.logging,
       schema: 'public',
-      entities: [Account, Fleet],
+      entities: [Account, Fleet, User],
     });
 
     DB = getConnection();

@@ -39,17 +39,17 @@ export class RemoveUserUseCase implements UseCase<RemoveUserDTO, Response> {
 
     try {
       const user = userOrError.getValue() as UserId;
-      const persistantFleet = (await this.userRepo.findUserByUserId(
+      const persistantUser = (await this.userRepo.findUserByUserId(
         user.userId,
       )) as User;
 
-      if (persistantFleet === null) {
+      if (persistantUser === null) {
         return wrong(
           new RemoveUserErrors.UnknownError(`${user.userId}`),
         ) as Response;
       }
 
-      const r = await this.userRepo.removeUserByUserId(persistantFleet.fleetId);
+      const r = await this.userRepo.removeUserByUserId(persistantUser.userId);
 
       const result: RemoveUserResponse = {
         result: 'user remove',
