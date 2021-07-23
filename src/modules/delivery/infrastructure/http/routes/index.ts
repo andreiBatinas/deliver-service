@@ -9,6 +9,10 @@ import {
   addFleetUseCase,
 } from '../../../useCases/addFleet';
 import {
+  AddUserController,
+  addUserUseCase,
+} from '../../../useCases/addUser';
+import {
   AuthenticateAccountController,
   authenticateAccountUseCase,
 } from '../../../useCases/authenticateAccount';
@@ -19,6 +23,10 @@ import {
 import { getFleetUseCase } from '../../../useCases/getFleet';
 import { GetFleetController } from '../../../useCases/getFleet/GetFleetController';
 import {
+  GetUserController,
+  getUserUseCase,
+} from '../../../useCases/getUser';
+import {
   ListFleetController,
   listFleetUseCase,
 } from '../../../useCases/listFleet';
@@ -26,6 +34,10 @@ import {
   RemoveFleetController,
   removeFleetUseCase,
 } from '../../../useCases/removeFleet';
+import {
+  RemoveUserController,
+  removeUserUseCase,
+} from '../../../useCases/removeUser';
 import { updateFleetUseCase } from '../../../useCases/updateFleet';
 import { UpdateFleetController } from '../../../useCases/updateFleet/UpdateFleetController';
 
@@ -47,20 +59,8 @@ deliveryRouter.post(
     await authenticateAccountController.execute(req, res);
   },
 );
-// .post('/list-conversation', async (req: Request, res: Response) => {
-//   const listConversationController = new ListConversationController(
-//     listConversationUseCase,
-//   );
-//   await listConversationController.execute(req, res);
-// })
 
-// .post('/remove-conversation', async (req: Request, res: Response) => {
-//   const removeModuleController = new RemoveConversationController(
-//     removeConversationUseCase,
-//   );
-//   await removeModuleController.execute(req, res);
-// })
-
+//Fleet-routes
 deliveryRouter.post('/get-fleet', async (req: Request, res: Response) => {
   const getFleetController = new GetFleetController(getFleetUseCase);
   await getFleetController.execute(req, res);
@@ -86,31 +86,20 @@ deliveryRouter.post('/remove-fleet', async (req: Request, res: Response) => {
   await removeFleetController.execute(req, res);
 });
 
-// .post('/module/update-module', async (req: Request, res: Response) => {
-//   const updateModuleController = new UpdateModuleController(
-//     updateModuleUseCase,
-//   );
-//   await updateModuleController.execute(req, res);
-// })
+//User-routes
+deliveryRouter.post('/add-user', async (req: Request, res: Response) => {
+  const addUserController = new AddUserController(addUserUseCase);
+  await addUserController.execute(req, res);
+});
 
-// .post(
-//   '/module/input-type/add-input-type',
-//   async (req: Request, res: Response) => {
-//     const addInputTypeController = new AddInputTypeController(
-//       addInputTypeUseCase,
-//     );
-//     await addInputTypeController.execute(req, res);
-//   },
-// )
+deliveryRouter.post('/remove-user', async (req: Request, res: Response) => {
+  const removeUserController = new RemoveUserController(removeUserUseCase);
+  await removeUserController.execute(req, res);
+});
 
-// .post(
-//   '/module/input-type/update-input-type',
-//   async (req: Request, res: Response) => {
-//     const updateInputTypeController = new UpdateInputTypeController(
-//       updateInputTypeUseCase,
-//     );
-//     await updateInputTypeController.execute(req, res);
-//   },
-// );
+deliveryRouter.post('/get-user', async (req: Request, res: Response) => {
+  const getUserController = new GetUserController(getUserUseCase);
+  await getUserController.execute(req, res);
+});
 
 export { deliveryRouter };
