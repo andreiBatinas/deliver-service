@@ -9,7 +9,6 @@ import {
 import { Logger } from '../../../../infrastructure/logger';
 import { FleetId } from '../../domain/FleetId';
 import { User } from '../../domain/User';
-import { UserId } from '../../domain/UserId';
 import { FleetIdMap } from '../../mappers/FleetIdMap';
 import { UserMap } from '../../mappers/UserMap';
 import { IUserRepo } from '../../repos/UserRepo';
@@ -36,7 +35,7 @@ export class ListUserUseCase implements UseCase<ListUserDTO, Response> {
     const fleetIdOrError = FleetId.New(f);
 
     if (fleetIdOrError.isFailure) {
-      return wrong(Result.Fail<UserId>(fleetIdOrError.error)) as Response;
+      return wrong(Result.Fail<FleetId>(fleetIdOrError.error)) as Response;
     }
 
     try {

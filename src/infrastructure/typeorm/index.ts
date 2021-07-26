@@ -10,6 +10,7 @@ import { Logger } from '../logger';
 import {
   Account,
   Fleet,
+  Restaurant,
   User,
 } from './models';
 
@@ -33,7 +34,7 @@ async function ConnectDatabase(log: Logger) {
       database: Configuration.db.database,
       logging: Configuration.db.logging,
       schema: 'public',
-      entities: [Account, Fleet, User],
+      entities: [Account, Fleet, User, Restaurant],
     });
 
     DB = getConnection();
