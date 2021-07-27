@@ -27,7 +27,7 @@ export class AddUserUseCase implements UseCase<AddUserDTO, Response> {
   }
 
   public async execute(req: AddUserDTO): Promise<Response> {
-    const log = new Logger('AddFleetUseCase');
+    const log = new Logger('AddUserUseCase');
 
     const u = UserMap.toBackend(req.user);
     const userOrError = User.New(u);

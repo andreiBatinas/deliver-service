@@ -6,11 +6,11 @@ import {
 } from '../../../../core/logic';
 import { sprintf } from '../../../../infrastructure/fmt';
 
-export namespace ListFleetErrors {
-  export class TokenNotFound extends Result<UseCaseError> {
+export namespace AddOrderErrors {
+  export class DataNotFound extends Result<UseCaseError> {
     constructor(token: string) {
       super(false, {
-        message: sprintf('Token entry not found. Got {0}', token),
+        message: sprintf('Data not found. Got {0}', token),
       } as UseCaseError);
     }
   }
@@ -23,13 +23,11 @@ export namespace ListFleetErrors {
     }
   }
 
-  // export class ConversationDontBelongToCampaign extends Result<UseCaseError> {
-  //   constructor(conversationId: string, campaignId: string) {
-  //     super(false, {
-  //       message: sprintf(
-  //         `Error. The conversation ${conversationId} doesn't belong to campaign ${campaignId}`,
-  //       ),
-  //     });
-  //   }
-  // }
+  export class OrderExists extends Result<UseCaseError> {
+    constructor(name: string) {
+      super(false, {
+        message: sprintf('Error. Module found  Got: {0}', name),
+      });
+    }
+  }
 }

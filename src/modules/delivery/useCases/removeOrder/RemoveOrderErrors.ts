@@ -6,7 +6,7 @@ import {
 } from '../../../../core/logic';
 import { sprintf } from '../../../../infrastructure/fmt';
 
-export namespace ListFleetErrors {
+export namespace RemoveOrderErrors {
   export class TokenNotFound extends Result<UseCaseError> {
     constructor(token: string) {
       super(false, {
@@ -23,6 +23,13 @@ export namespace ListFleetErrors {
     }
   }
 
+  export class OrderNotFound extends Result<UseCaseError> {
+    constructor(id: string) {
+      super(false, {
+        message: sprintf('Unknown Error . Got: {0}', id),
+      });
+    }
+  }
   // export class ConversationDontBelongToCampaign extends Result<UseCaseError> {
   //   constructor(conversationId: string, campaignId: string) {
   //     super(false, {

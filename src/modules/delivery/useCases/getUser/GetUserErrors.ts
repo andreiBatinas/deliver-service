@@ -22,6 +22,14 @@ export namespace GetUserErrors {
       });
     }
   }
+
+  export class UserNotFound extends Result<UseCaseError> {
+    constructor(id: string) {
+      super(false, {
+        message: sprintf('Unknown Error . Got: {0}', id),
+      });
+    }
+  }
   // export class ConversationDontBelongToCampaign extends Result<UseCaseError> {
   //   constructor(conversationId: string, campaignId: string) {
   //     super(false, {

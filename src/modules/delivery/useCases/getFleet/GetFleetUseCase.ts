@@ -46,7 +46,7 @@ export class GetFleetUseCase implements UseCase<GetFleetDTO, Response> {
 
       if (persistantFleet === null) {
         return wrong(
-          new GetFleetErrors.UnknownError(`${fleet.fleetId}`),
+          new GetFleetErrors.FleetNotFound(`${fleet.fleetId}`),
         ) as Response;
       }
 

@@ -9,6 +9,10 @@ import {
   addFleetUseCase,
 } from '../../../useCases/addFleet';
 import {
+  AddOrderController,
+  addOrderUseCase,
+} from '../../../useCases/addOrder';
+import {
   AddRestaurantController,
   addRestaurantUseCase,
 } from '../../../useCases/addRestaurant';
@@ -27,6 +31,10 @@ import {
 import { getFleetUseCase } from '../../../useCases/getFleet';
 import { GetFleetController } from '../../../useCases/getFleet/GetFleetController';
 import {
+  GetOrderController,
+  getOrderUseCase,
+} from '../../../useCases/getOrder';
+import {
   GetRestaurantController,
   getRestaurantUseCase,
 } from '../../../useCases/getRestaurant';
@@ -38,6 +46,10 @@ import {
   ListFleetController,
   listFleetUseCase,
 } from '../../../useCases/listFleet';
+import {
+  ListOrderController,
+  listOrderUseCase,
+} from '../../../useCases/listOrder';
 import {
   ListRestaurantController,
   listRestaurantUseCase,
@@ -51,6 +63,10 @@ import {
   removeFleetUseCase,
 } from '../../../useCases/removeFleet';
 import {
+  RemoveOrderController,
+  removeOrderUseCase,
+} from '../../../useCases/removeOrder';
+import {
   RemoveRestaurantController,
   removeRestaurantUseCase,
 } from '../../../useCases/removeRestaurant';
@@ -60,6 +76,10 @@ import {
 } from '../../../useCases/removeUser';
 import { updateFleetUseCase } from '../../../useCases/updateFleet';
 import { UpdateFleetController } from '../../../useCases/updateFleet/UpdateFleetController';
+import {
+  UpdateOrderController,
+  updateOrderUseCase,
+} from '../../../useCases/updateOrder';
 import {
   UpdateRestaurantController,
   updateRestaurantUseCase,
@@ -112,6 +132,32 @@ deliveryRouter.post('/list-fleet', async (req: Request, res: Response) => {
 deliveryRouter.post('/remove-fleet', async (req: Request, res: Response) => {
   const removeFleetController = new RemoveFleetController(removeFleetUseCase);
   await removeFleetController.execute(req, res);
+});
+
+//Order-routes
+deliveryRouter.post('/add-order', async (req: Request, res: Response) => {
+  const addOrderController = new AddOrderController(addOrderUseCase);
+  await addOrderController.execute(req, res);
+});
+
+deliveryRouter.post('/get-order', async (req: Request, res: Response) => {
+  const getOrderController = new GetOrderController(getOrderUseCase);
+  await getOrderController.execute(req, res);
+});
+
+deliveryRouter.post('/list-order', async (req: Request, res: Response) => {
+  const listOrderController = new ListOrderController(listOrderUseCase);
+  await listOrderController.execute(req, res);
+});
+
+deliveryRouter.post('/remove-order', async (req: Request, res: Response) => {
+  const removeOrderController = new RemoveOrderController(removeOrderUseCase);
+  await removeOrderController.execute(req, res);
+});
+
+deliveryRouter.post('/update-order', async (req: Request, res: Response) => {
+  const updateOrderController = new UpdateOrderController(updateOrderUseCase);
+  await updateOrderController.execute(req, res);
 });
 
 //User-routes
