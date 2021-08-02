@@ -3,7 +3,7 @@ import { Account } from '../domain/Account';
 import { AccountMap } from '../mappers/AccountMap';
 
 export interface IAccountRepo {
-  //findAccountByAccountName(name: string): Promise<Account | null>;
+  findAccountByAccountEmail(accountEmail: string): Promise<Account | null>;
   //findAccountByAccountId(accountId: string): Promise<Account | null>;
   save(account: Account): Promise<Account>;
   exists(accountEmail: string): Promise<boolean>;
@@ -46,19 +46,21 @@ export class AccountRepo implements IAccountRepo {
     return false;
   }
 
-  // public async findAccountByAccountName(name: string): Promise<Account | null> {
-  //   const accountModel = this.models.Account;
-  //   const account = await DB.getRepository(accountModel).findOne({
-  //     where: {
-  //       name,
-  //     },
-  //   });
+  public async findAccountByAccountEmail(
+    accountEmail: string,
+  ): Promise<Account | null> {
+    const accountModel = this.models.Account;
+    const account = await DB.getRepository(accountModel).findOne({
+      where: {
+        accountEmail,
+      },
+    });
 
-  //   if (undefined === account) {
-  //     return null;
-  //   }
-  //   return account as Account;
-  // }
+    if (undefined === account) {
+      return null;
+    }
+    return account as Account;
+  }
 
   public async save(account: Account): Promise<Account> {
     const accountModel = this.models.Account;

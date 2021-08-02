@@ -51,14 +51,26 @@ export class AuthenticateAccountUseCase
           new AuthenticateAccountErrors.DataNotFound(account.accountEmail),
         ) as Response;
       }
+
+      const persistantAccount =
+        (await this.accountRepo.findAccountByAccountEmail(
+          account.accountEmail,
+        )) as Account;
+
+      if (persistantAccount === null) {
+        return wrong(
+          new AuthenticateAccountErrors.DataNotFound(`${account.accountEmail}`),
+        ) as Response;
+      }
+
       const result: AuthenticateAccountResponse = {
         result: 'authentification succesfull',
-        data: AccountMap.toFrontend(account),
+        data: AccountMap.toFrontend(persistantAccount),
       };
 
       return right(Result.OK<AuthenticateAccountResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new AuthenticateAccountErrors.UnknownError(e)) as Response;
     }
   }
