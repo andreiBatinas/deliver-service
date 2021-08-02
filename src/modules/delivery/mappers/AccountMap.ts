@@ -57,6 +57,7 @@ export class AccountMap extends Mapper<Account> {
 
   static toFrontend(raw: Account): any {
     return {
+      accountId: raw.accountId,
       accountCUI: raw.accountCUI,
       accountEmail: raw.accountEmail,
       accountName: raw.accountName,

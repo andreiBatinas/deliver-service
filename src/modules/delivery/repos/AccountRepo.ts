@@ -73,7 +73,7 @@ export class AccountRepo implements IAccountRepo {
     c.accountTelephone = rawAccount.accountTelephone;
     c.accountOfficeAddress = rawAccount.accountOfficeAddress;
     c.accountCUI = rawAccount.accountCUI;
-    c.accountCreatedAt = rawAccount.accountCreatedAt;
+    c.accountCreatedAt = new Date();
     c.accountUpdatedAt = rawAccount.accountUpdatedAt;
 
     const accountResult = await accountRepo.save(c);
