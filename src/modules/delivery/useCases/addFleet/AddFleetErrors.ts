@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable max-classes-per-file */
-import { Result, UseCaseError } from '../../../../core/logic';
+import {
+  Result,
+  UseCaseError,
+} from '../../../../core/logic';
 import { sprintf } from '../../../../infrastructure/fmt';
 
 export namespace AddFleetErrors {
-  export class DataNotFound extends Result<UseCaseError> {
+  export class TokenNotFound extends Result<UseCaseError> {
     constructor(token: string) {
       super(false, {
         message: sprintf('Data not found. Got {0}', token),

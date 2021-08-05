@@ -56,8 +56,8 @@ export class FleetRepo implements IFleetRepo {
     c.fleetName = rawFleet.fleetName;
     c.fleetLocation = rawFleet.fleetLocation;
     c.fleetCreatedAt = rawFleet.fleetCreatedAt;
-    c.fleetUpdatedAt = rawFleet.fleetUpdatedAt;
     c.accountId = rawFleet.accountId;
+    c.fleetCreatedAt = new Date();
 
     const fleetResult = await fleetRepo.save(c);
     return fleetResult;
@@ -123,10 +123,10 @@ export class FleetRepo implements IFleetRepo {
     const criteria = { fleetId: fleet.fleetId };
     const propertiesToUpdate: any = { fleetUpdatedAt: new Date() };
     if (rawFleet.fleetName) {
-      propertiesToUpdate['fleetName'] = rawFleet.fleetName;
+      propertiesToUpdate.fleetName = rawFleet.fleetName;
     }
     if (rawFleet.fleetLocation) {
-      propertiesToUpdate['fleetLocation'] = rawFleet.fleetLocation;
+      propertiesToUpdate.fleetLocation = rawFleet.fleetLocation;
     }
 
     const result = await DB.getRepository(fleetModel).update(

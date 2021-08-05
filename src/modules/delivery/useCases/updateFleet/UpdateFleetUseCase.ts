@@ -62,7 +62,7 @@ export class UpdateFleetUseCase implements UseCase<UpdateFleetDTO, Response> {
 
       return right(Result.OK<UpdateFleetResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new UpdateFleetErrors.UnknownError(e)) as Response;
     }
   }

@@ -29,7 +29,7 @@ export class AddFleetUseCase implements UseCase<AddFleetDTO, Response> {
   public async execute(req: AddFleetDTO): Promise<Response> {
     const log = new Logger('AddFleetUseCase');
 
-    const f = FleetMap.toBackend(req.fleet);
+    const f = FleetMap.toBackend(req.fleetToAdd);
     const fleetOrError = Fleet.New(f);
 
     if (fleetOrError.isFailure) {
@@ -54,7 +54,7 @@ export class AddFleetUseCase implements UseCase<AddFleetDTO, Response> {
 
       return right(Result.OK<AddFleetResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new AddFleetErrors.UnknownError(e)) as Response;
     }
   }

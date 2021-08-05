@@ -1,5 +1,5 @@
 export interface AddFleetDTO {
-  fleet: {
+  fleetToAdd: {
     fleetName: string;
     fleetLocation: string;
     fleetCreatedAt: Date;

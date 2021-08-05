@@ -32,7 +32,7 @@ export class ListFleetUseCase implements UseCase<ListFleetDTO, Response> {
   public async execute(req: ListFleetDTO): Promise<Response> {
     const log = new Logger('ListFleetUseCase');
 
-    const a = AccountIdMap.toBackend(req.fleet);
+    const a = AccountIdMap.toBackend(req.fleetToList);
     const accountIdOrError = AccountId.New(a);
 
     if (accountIdOrError.isFailure) {
@@ -62,7 +62,7 @@ export class ListFleetUseCase implements UseCase<ListFleetDTO, Response> {
 
       return right(Result.OK<ListFleetResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new ListFleetErrors.UnknownError(e)) as Response;
     }
   }
