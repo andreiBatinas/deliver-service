@@ -4,8 +4,12 @@ import { Fleet } from '../domain/Fleet';
 export class FleetMap extends Mapper<Fleet> {
   public static toBackend(fleet: any): any {
     return {
+      fleetId: fleet.fleetId,
       fleetName: fleet.fleetName,
       fleetLocation: fleet.fleetLocation,
+      fleetCreatedAt: fleet.fleetCreatedAt,
+      fleetUpdatedAt: fleet.fleetUpdatedAt,
+      accountId: fleet.accountId,
     };
   }
 
@@ -13,6 +17,9 @@ export class FleetMap extends Mapper<Fleet> {
     return {
       fleetName: fleet.fleetName,
       fleetLocation: fleet.fleetLocation,
+      fleetCreatedAt: fleet.fleetCreatedAt,
+      fleetUpdatedAt: fleet.fleetUpdatedAt,
+      accountId: fleet.accountId,
     };
   }
 

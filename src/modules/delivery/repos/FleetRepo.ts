@@ -5,7 +5,7 @@ import { Fleet } from '../domain/Fleet';
 import { FleetMap } from '../mappers/FleetMap';
 
 export interface IFleetRepo {
-  //findAccountByAccountName(name: string): Promise<Account | null>;
+  findFleetByFleetName(fleetname: string): Promise<Fleet | null>;
   findFleetByFleetId(fleetId: number): Promise<Fleet | null>;
   save(fleet: Fleet): Promise<Fleet>;
   exists(fleetName: string): Promise<boolean>;
@@ -32,19 +32,19 @@ export class FleetRepo implements IFleetRepo {
     return false;
   }
 
-  // public async findAccountByAccountName(name: string): Promise<Account | null> {
-  //   const accountModel = this.models.Account;
-  //   const account = await DB.getRepository(accountModel).findOne({
-  //     where: {
-  //       name,
-  //     },
-  //   });
+  public async findFleetByFleetName(fleetName: string): Promise<Fleet | null> {
+    const fleetModel = this.models.Fleet;
+    const fleet = await DB.getRepository(fleetModel).findOne({
+      where: {
+        fleetName,
+      },
+    });
 
-  //   if (undefined === account) {
-  //     return null;
-  //   }
-  //   return account as Account;
-  // }
+    if (undefined === fleet) {
+      return null;
+    }
+    return fleet as Fleet;
+  }
 
   public async save(fleet: Fleet): Promise<Fleet> {
     const fleetModel = this.models.Fleet;
@@ -55,11 +55,20 @@ export class FleetRepo implements IFleetRepo {
 
     c.fleetName = rawFleet.fleetName;
     c.fleetLocation = rawFleet.fleetLocation;
-    c.fleetCreatedAt = rawFleet.fleetCreatedAt;
     c.accountId = rawFleet.accountId;
     c.fleetCreatedAt = new Date();
+    c.fleetUpdatedAt = rawFleet.fleetUpdatedAt;
 
     const fleetResult = await fleetRepo.save(c);
+
+    const fleetAdded: any = await fleetRepo.findOne({
+      fleetName: c.fleetName,
+      fleetLocation: c.fleetLocation,
+      accountId: c.accountId,
+      fleetCreatedAt: c.fleetCreatedAt,
+    });
+    fleetResult.fleetId = fleetAdded.fleetId;
+
     return fleetResult;
   }
 

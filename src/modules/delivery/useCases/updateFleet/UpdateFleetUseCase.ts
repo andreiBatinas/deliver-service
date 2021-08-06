@@ -57,7 +57,7 @@ export class UpdateFleetUseCase implements UseCase<UpdateFleetDTO, Response> {
 
       const result: UpdateFleetResponse = {
         result: 'fleet updated',
-        data: FleetMap.toFrontend(r),
+        data: await FleetMap.toFrontend(r),
       };
 
       return right(Result.OK<UpdateFleetResponse>(result)) as Response;

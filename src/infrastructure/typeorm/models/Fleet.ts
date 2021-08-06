@@ -1,4 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryColumn,
+} from 'typeorm';
 
 @Entity({ name: 'fleets' })
 export class Fleet {
@@ -39,6 +43,9 @@ export class Fleet {
     nullable: false,
   })
   fleetUpdatedAt?: string;
+
+  //@ManyToOne(() => Account, (account) => account.fleets)
+  //account:Account;
 
   // @OneToMany(() => Module, (module) => module.conversation)
   // modules?: Module[];
