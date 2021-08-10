@@ -17,6 +17,7 @@ interface RestaurantProps {
   restaurantCreatedAt: string;
   restaurantUpdatedAt: string;
   fleetId: number;
+  accountId: number;
   //modules?: Module[];
 }
 
@@ -61,6 +62,10 @@ export class Restaurant extends Entity<RestaurantProps> {
     return this.props.fleetId;
   }
 
+  get accountId(): number {
+    return this.props.accountId;
+  }
+
   constructor(props: RestaurantProps, id?: UniqueEntityId) {
     super(props, id);
   }
@@ -74,6 +79,7 @@ export class Restaurant extends Entity<RestaurantProps> {
       { arg: props.restaurantPassword, argName: 'restaurantPassword' },
       { arg: props.restaurantTelephone, argName: 'restaurantTelephone' },
       { arg: props.fleetId, argName: 'fleetId' },
+      { arg: props.accountId, argName: 'accountId' },
     ]);
 
     if (false === validator.succeeded) {

@@ -13,6 +13,7 @@ export class RestaurantMap extends Mapper<Restaurant> {
       restaurantCreatedAt: restaurant.restaurantCreatedAt,
       restaurantUpdatedAt: restaurant.restaurantUpdatedAt,
       fleetId: restaurant.fleetId,
+      accountId: restaurant.accountId,
     };
   }
 
@@ -27,6 +28,7 @@ export class RestaurantMap extends Mapper<Restaurant> {
       restaurantCreatedAt: restaurant.restaurantCreatedAt,
       restaurantUpdatedAt: restaurant.restaurantUpdatedAt,
       fleetId: restaurant.fleetId,
+      accountId: restaurant.accountId,
     };
   }
 
@@ -42,7 +44,7 @@ export class RestaurantMap extends Mapper<Restaurant> {
 
   static toDomainFromDb(raw: any): Restaurant {
     const restaurantOrError = Restaurant.New({
-      fleetId: raw.fleetId,
+      restaurantId: raw.restaurantId,
       restaurantName: raw.restaurantName,
       restaurantAddress: raw.restaurantAddress,
       restaurantUsername: raw.restaurantUsername,
@@ -50,6 +52,8 @@ export class RestaurantMap extends Mapper<Restaurant> {
       restaurantTelephone: raw.restaurantTelephone,
       restaurantCreatedAt: raw.restaurantCreatedAt,
       restaurantUpdatedAt: raw.restaurantUpdatedAt,
+      fleetId: raw.fleetId,
+      accountId: raw.accountId,
     });
 
     return restaurantOrError.getValue() as Restaurant;
@@ -57,7 +61,7 @@ export class RestaurantMap extends Mapper<Restaurant> {
 
   static toFrontend(raw: Restaurant): any {
     return {
-      fleetId: raw.fleetId,
+      restaurantId: raw.restaurantId,
       restaurantName: raw.restaurantName,
       restaurantAddress: raw.restaurantAddress,
       restaurantUsername: raw.restaurantUsername,
@@ -65,6 +69,8 @@ export class RestaurantMap extends Mapper<Restaurant> {
       restaurantTelephone: raw.restaurantTelephone,
       restaurantCreatedAt: raw.restaurantCreatedAt,
       restaurantUpdatedAt: raw.restaurantUpdatedAt,
+      fleetId: raw.fleetId,
+      accountId: raw.accountId,
     };
   }
 }

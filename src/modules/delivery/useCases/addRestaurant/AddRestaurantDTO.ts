@@ -1,12 +1,11 @@
 export interface AddRestaurantDTO {
-  restaurant: {
+  restaurantToAdd: {
     restaurantName: string;
     restaurantAddress: string;
     restaurantUsername: string;
     restaurantPassword: string;
     restaurantTelephone: string;
-    restaurantCreatedAt: Date;
-    restaurantUpdatedAt: Date;
-    fleetId: number;
+    fleetName: string;
+    accountId: number;
   };
 }

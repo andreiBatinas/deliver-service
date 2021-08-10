@@ -58,7 +58,7 @@ export class RemoveUserUseCase implements UseCase<RemoveUserDTO, Response> {
 
       return right(Result.OK<RemoveUserResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new RemoveUserErrors.UnknownError(e)) as Response;
     }
   }

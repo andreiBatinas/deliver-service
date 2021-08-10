@@ -57,7 +57,7 @@ export class GetUserUseCase implements UseCase<GetUserDTO, Response> {
 
       return right(Result.OK<GetUserResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new GetUserErrors.UnknownError(e)) as Response;
     }
   }

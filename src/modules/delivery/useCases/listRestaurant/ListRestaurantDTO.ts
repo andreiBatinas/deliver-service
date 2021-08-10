@@ -1,5 +1,5 @@
 export interface ListRestaurantDTO {
-  restaurant: {
-    fleetId: number;
+  restaurantToList: {
+    accountId: number;
   };
 }

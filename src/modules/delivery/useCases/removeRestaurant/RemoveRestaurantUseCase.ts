@@ -67,7 +67,7 @@ export class RemoveRestaurantUseCase
 
       return right(Result.OK<RemoveRestaurantResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new RemoveRestaurantErrors.UnknownError(e)) as Response;
     }
   }

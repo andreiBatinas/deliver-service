@@ -11,9 +11,8 @@ export interface IRestaurantRepo {
   ): Promise<Restaurant | null>;
   save(restaurant: Restaurant): Promise<Restaurant>;
   exists(restaurantName: string): Promise<boolean>;
-  findRestaurantsByFleetId(fleetId: number): Promise<Restaurant[]>;
-
-  //findModulesByConversationId(conversationId: string): Promise<Account[]>;
+  //findRestaurantsByFleetId(fleetId: number): Promise<Restaurant[]>;
+  findRestaurantsByAccountId(accountId: number): Promise<Restaurant[]>;
   removeRestaurantByRestaurantId(restaurantId: number): Promise<boolean>;
   updateRestaurant(restaurant: Restaurant): Promise<Restaurant | null>;
 }
@@ -57,24 +56,34 @@ export class RestaurantRepo implements IRestaurantRepo {
 
     c.restaurantName = rawRestaurant.restaurantName;
     c.restaurantAddress = rawRestaurant.restaurantAddress;
-    c.restaurantCreatedAt = rawRestaurant.restaurantCreatedAt;
+    c.restaurantCreatedAt = new Date();
     c.restaurantUpdatedAt = rawRestaurant.restaurantUpdatedAt;
-    c.fleetId = rawRestaurant.fleetId;
     c.restaurantPassword = rawRestaurant.restaurantPassword;
     c.restaurantUsername = rawRestaurant.restaurantUsername;
     c.restaurantTelephone = rawRestaurant.restaurantTelephone;
+    c.fleetId = rawRestaurant.fleetId;
+    c.accountId = rawRestaurant.accountId;
 
     const restaurantResult = await restaurantRepo.save(c);
+
+    const restaurantAdded: any = await restaurantRepo.findOne({
+      restaurantName: c.restaurantName,
+      restaurantAddress: c.restaurantAddress,
+      accountId: c.accountId,
+      restaurantCreatedAt: c.restaurantCreatedAt,
+    });
+    restaurantResult.userId = restaurantAdded.userId;
+
     return restaurantResult;
   }
 
-  public async findRestaurantsByFleetId(
-    fleetId: number,
+  public async findRestaurantsByAccountId(
+    accountId: number,
   ): Promise<Restaurant[]> {
     const restaurantModel = this.models.Restaurant;
     const r = await DB.getRepository(restaurantModel).find({
       where: {
-        fleetId,
+        accountId,
       },
     });
 
@@ -139,21 +148,19 @@ export class RestaurantRepo implements IRestaurantRepo {
     const criteria = { restaurantId: restaurant.restaurantId };
     const propertiesToUpdate: any = { restaurantUpdatedAt: new Date() };
     if (rawRestaurant.restaurantName) {
-      propertiesToUpdate['restaurantName'] = rawRestaurant.restaurantName;
+      propertiesToUpdate.restaurantName = rawRestaurant.restaurantName;
     }
     if (rawRestaurant.restaurantAddress) {
-      propertiesToUpdate['restaurantAddress'] = rawRestaurant.restaurantAddress;
+      propertiesToUpdate.restaurantAddress = rawRestaurant.restaurantAddress;
     }
     if (rawRestaurant.restaurantUsername) {
-      propertiesToUpdate['restaurantUsername'] =
-        rawRestaurant.restaurantUsername;
+      propertiesToUpdate.restaurantUsername = rawRestaurant.restaurantUsername;
     }
     if (rawRestaurant.restaurantPassword) {
-      propertiesToUpdate['restaurantPassword'] =
-        rawRestaurant.restaurantPassword;
+      propertiesToUpdate.restaurantPassword = rawRestaurant.restaurantPassword;
     }
     if (rawRestaurant.restaurantTelephone) {
-      propertiesToUpdate['restaurantTelephone'] =
+      propertiesToUpdate.restaurantTelephone =
         rawRestaurant.restaurantTelephone;
     }
 

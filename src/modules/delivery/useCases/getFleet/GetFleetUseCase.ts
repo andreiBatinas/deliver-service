@@ -57,7 +57,7 @@ export class GetFleetUseCase implements UseCase<GetFleetDTO, Response> {
 
       return right(Result.OK<GetFleetResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new GetFleetErrors.UnknownError(e)) as Response;
     }
   }

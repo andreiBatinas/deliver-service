@@ -6,8 +6,5 @@ export interface UpdateRestaurantDTO {
     restaurantPassword: string;
     restaurantUsername: string;
     restaurantTelephone: string;
-    restaurantCreatedAt: Date;
-    restaurantUpdatedAt: Date;
-    fleetId: number;
   };
 }

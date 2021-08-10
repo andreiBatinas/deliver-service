@@ -61,6 +61,12 @@ export class Restaurant {
   })
   fleetId?: number;
 
+  @Column({
+    name: 'accountId',
+    nullable: false,
+  })
+  accountId?: number;
+
   // @OneToMany(() => Module, (module) => module.conversation)
   // modules?: Module[];
 }

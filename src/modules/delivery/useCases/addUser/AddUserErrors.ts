@@ -30,6 +30,7 @@ export namespace AddUserErrors {
       });
     }
   }
+
   export class FleetDoesntExists extends Result<UseCaseError> {
     constructor(name: string) {
       super(false, {

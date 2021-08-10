@@ -9,6 +9,7 @@ import {
 import { Logger } from '../../../../infrastructure/logger';
 import { Restaurant } from '../../domain/Restaurant';
 import { RestaurantMap } from '../../mappers/RestaurantMap';
+import { IFleetRepo } from '../../repos/FleetRepo';
 import { IRestaurantRepo } from '../../repos/RestaurantRepo';
 import { AddRestaurantDTO } from './AddRestaurantDTO';
 import { AddRestaurantErrors } from './AddRestaurantErrors';
@@ -23,15 +24,30 @@ export class AddRestaurantUseCase
   implements UseCase<AddRestaurantDTO, Response>
 {
   private restaurantRepo: IRestaurantRepo;
+  private fleetRepo: IFleetRepo;
 
-  constructor(restaurantRepo: IRestaurantRepo) {
+  constructor(restaurantRepo: IRestaurantRepo, fleetRepo: IFleetRepo) {
     this.restaurantRepo = restaurantRepo;
+    this.fleetRepo = fleetRepo;
   }
 
   public async execute(req: AddRestaurantDTO): Promise<Response> {
     const log = new Logger('AddRestaurantUseCase');
 
-    const rest = RestaurantMap.toBackend(req.restaurant);
+    const fleetCheck = await this.fleetRepo.findFleetByFleetName(
+      req.restaurantToAdd.fleetName,
+    );
+    if (fleetCheck === null) {
+      return wrong(
+        new AddRestaurantErrors.FleetDoesntExists(
+          req.restaurantToAdd.fleetName,
+        ),
+      ) as Response;
+    }
+    const restaurantToAdd: any = req.restaurantToAdd;
+    restaurantToAdd.fleetId = fleetCheck.fleetId;
+
+    const rest = RestaurantMap.toBackend(restaurantToAdd);
     const restaurantOrError = Restaurant.New(rest);
 
     if (restaurantOrError.isFailure) {

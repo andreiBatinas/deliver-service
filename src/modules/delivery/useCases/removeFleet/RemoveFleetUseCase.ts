@@ -60,7 +60,7 @@ export class RemoveFleetUseCase implements UseCase<RemoveFleetDTO, Response> {
 
       return right(Result.OK<RemoveFleetResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new RemoveFleetErrors.UnknownError(e)) as Response;
     }
   }

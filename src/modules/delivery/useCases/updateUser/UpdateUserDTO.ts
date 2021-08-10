@@ -7,8 +7,5 @@ export interface UpdateUserDTO {
     userEmail: string;
     userRole: string;
     userTelephone: string;
-    userCreatedAt: Date;
-    userUpdatedAt: Date;
-    fleetId: number;
   };
 }
