@@ -18,6 +18,7 @@ interface UserProps {
   userCreatedAt: string;
   userUpdatedAt: string;
   fleetId: number;
+  accountId: number;
   //modules?: Module[];
 }
 
@@ -62,6 +63,10 @@ export class User extends Entity<UserProps> {
     return this.props.fleetId;
   }
 
+  get accountId(): number {
+    return this.props.accountId;
+  }
+
   get userTelephone(): string {
     return this.props.userTelephone;
   }
@@ -80,6 +85,7 @@ export class User extends Entity<UserProps> {
       { arg: props.userPassword, argName: 'userPassword' },
       { arg: props.userTelephone, argName: 'userTelephone' },
       { arg: props.fleetId, argName: 'fleetId' },
+      { arg: props.accountId, argName: 'accountId' },
     ]);
 
     if (false === validator.succeeded) {

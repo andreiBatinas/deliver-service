@@ -36,11 +36,11 @@ export class FleetMap extends Mapper<Fleet> {
   static toDomainFromDb(raw: any): Fleet {
     const fleetOrError = Fleet.New({
       fleetId: raw.fleetId,
-      accountId: raw.accountId,
       fleetName: raw.fleetName,
       fleetLocation: raw.fleetLocation,
       fleetCreatedAt: raw.fleetCreatedAt,
       fleetUpdatedAt: raw.fleetUpdatedAt,
+      accountId: raw.accountId,
     });
 
     return fleetOrError.getValue() as Fleet;

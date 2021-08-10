@@ -30,4 +30,11 @@ export namespace AddUserErrors {
       });
     }
   }
+  export class FleetDoesntExists extends Result<UseCaseError> {
+    constructor(name: string) {
+      super(false, {
+        message: sprintf('Error. Fleet not found. Got {0}', name),
+      });
+    }
+  }
 }

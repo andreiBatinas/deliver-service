@@ -9,9 +9,8 @@ export interface IUserRepo {
   findUserByUserId(userId: number): Promise<User | null>;
   save(user: User): Promise<User>;
   exists(userEmail: string): Promise<boolean>;
-  findUsersByFleetId(fleetId: number): Promise<User[]>;
-
-  //findModulesByConversationId(conversationId: string): Promise<Account[]>;
+  // findUsersByFleetId(fleetId: number): Promise<User[]>;
+  findUsersByAccountId(accountId: number): Promise<User[]>;
   removeUserByUserId(userId: number): Promise<boolean>;
   updateUser(user: User): Promise<User | null>;
 }
@@ -55,23 +54,33 @@ export class UserRepo implements IUserRepo {
 
     c.userName = rawUser.userName;
     c.userSurname = rawUser.userSurname;
-    c.userCreatedAt = rawUser.userCreatedAt;
+    c.userCreatedAt = new Date();
     c.userUpdatedAt = rawUser.userUpdatedAt;
-    c.fleetId = rawUser.fleetId;
     c.userPassword = rawUser.userPassword;
     c.userEmail = rawUser.userEmail;
     c.userRole = rawUser.userRole;
     c.userTelephone = rawUser.userTelephone;
+    c.accountId = rawUser.accountId;
+    c.fleetId = rawUser.fleetId;
 
     const userResult = await userRepo.save(c);
+
+    const userAdded: any = await userRepo.findOne({
+      userName: c.userName,
+      userEmail: c.userEmail,
+      accountId: c.accountId,
+      userCreatedAt: c.userCreatedAt,
+    });
+    userResult.userId = userAdded.userId;
+
     return userResult;
   }
 
-  public async findUsersByFleetId(fleetId: number): Promise<User[]> {
+  public async findUsersByAccountId(accountId: number): Promise<User[]> {
     const userModel = this.models.User;
     const r = await DB.getRepository(userModel).find({
       where: {
-        fleetId,
+        accountId,
       },
     });
 
@@ -128,22 +137,22 @@ export class UserRepo implements IUserRepo {
     const criteria = { userId: user.userId };
     const propertiesToUpdate: any = { userUpdatedAt: new Date() };
     if (rawUser.userName) {
-      propertiesToUpdate['userName'] = rawUser.userName;
+      propertiesToUpdate.userName = rawUser.userName;
     }
     if (rawUser.userSurname) {
-      propertiesToUpdate['userSurname'] = rawUser.userSurname;
+      propertiesToUpdate.userSurname = rawUser.userSurname;
     }
     if (rawUser.userPassword) {
-      propertiesToUpdate['userPassword'] = rawUser.userPassword;
+      propertiesToUpdate.userPassword = rawUser.userPassword;
     }
     if (rawUser.userEmail) {
-      propertiesToUpdate['userEmail'] = rawUser.userEmail;
+      propertiesToUpdate.userEmail = rawUser.userEmail;
     }
     if (rawUser.userRole) {
-      propertiesToUpdate['userRole'] = rawUser.userRole;
+      propertiesToUpdate.userRole = rawUser.userRole;
     }
     if (rawUser.userTelephone) {
-      propertiesToUpdate['userTelephone'] = rawUser.userTelephone;
+      propertiesToUpdate.userTelephone = rawUser.userTelephone;
     }
 
     const result = await DB.getRepository(userModel).update(

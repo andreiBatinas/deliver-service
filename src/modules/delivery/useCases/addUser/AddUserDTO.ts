@@ -1,13 +1,12 @@
 export interface AddUserDTO {
-  user: {
+  userToAdd: {
     userName: string;
     userSurname: string;
     userPassword: string;
     userEmail: string;
     userRole: string;
     userTelephone: string;
-    userCreatedAt: Date;
-    userUpdatedAt: Date;
-    fleetId: number;
+    fleetName: string;
+    accountId: number;
   };
 }

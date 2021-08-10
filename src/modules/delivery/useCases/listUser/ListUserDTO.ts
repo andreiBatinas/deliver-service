@@ -1,5 +1,5 @@
 export interface ListUserDTO {
-  user: {
-    fleetId: number;
+  userToList: {
+    accountId: number;
   };
 }

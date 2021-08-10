@@ -126,6 +126,7 @@ export class FleetRepo implements IFleetRepo {
     }
     return true;
   }
+
   public async updateFleet(fleet: Fleet): Promise<Fleet | null> {
     const fleetModel = this.models.Fleet;
     const rawFleet = FleetMap.toPersistent(fleet);

@@ -7,9 +7,10 @@ import {
   wrong,
 } from '../../../../core/logic';
 import { Logger } from '../../../../infrastructure/logger';
+import { AccountId } from '../../domain/AccountId';
 import { FleetId } from '../../domain/FleetId';
 import { User } from '../../domain/User';
-import { FleetIdMap } from '../../mappers/FleetIdMap';
+import { AccountIdMap } from '../../mappers/AccountIdMap';
 import { UserMap } from '../../mappers/UserMap';
 import { IUserRepo } from '../../repos/UserRepo';
 import { ListUserDTO } from './ListUserDTO';
@@ -31,22 +32,30 @@ export class ListUserUseCase implements UseCase<ListUserDTO, Response> {
   public async execute(req: ListUserDTO): Promise<Response> {
     const log = new Logger('ListUserUseCase');
 
-    const f = FleetIdMap.toBackend(req.user);
-    const fleetIdOrError = FleetId.New(f);
+    const a = AccountIdMap.toBackend(req.userToList);
+    const accountIdOrError = AccountId.New(a);
 
-    if (fleetIdOrError.isFailure) {
-      return wrong(Result.Fail<FleetId>(fleetIdOrError.error)) as Response;
+    if (accountIdOrError.isFailure) {
+      return wrong(Result.Fail<FleetId>(accountIdOrError.error)) as Response;
     }
 
+    // const f = FleetIdMap.toBackend(req.userToList);
+    // const fleetIdOrError = FleetId.New(f);
+
+    // if (fleetIdOrError.isFailure) {
+    //   return wrong(Result.Fail<FleetId>(fleetIdOrError.error)) as Response;
+    // }
+
     try {
-      const fleet = fleetIdOrError.getValue() as FleetId;
-      const listUser = (await this.userRepo.findUsersByFleetId(
-        fleet.fleetId,
+      const account = accountIdOrError.getValue() as AccountId;
+      //const fleet = fleetIdOrError.getValue() as FleetId;
+      const listUser = (await this.userRepo.findUsersByAccountId(
+        account.accountId,
       )) as User[];
 
       if (listUser === null) {
         return wrong(
-          new ListUserErrors.UnknownError(`${fleet.fleetId}`),
+          new ListUserErrors.UnknownError(`${account.accountId}`),
         ) as Response;
       }
 
@@ -61,7 +70,7 @@ export class ListUserUseCase implements UseCase<ListUserDTO, Response> {
 
       return right(Result.OK<ListUserResponse>(result)) as Response;
     } catch (e) {
-      log.error(`[HTTP][Error] ${e.details}`, 'error');
+      log.error(`[HTTP][Error] ${e.details},${e.message}`, 'error');
       return wrong(new ListUserErrors.UnknownError(e)) as Response;
     }
   }

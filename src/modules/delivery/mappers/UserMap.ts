@@ -14,12 +14,12 @@ export class UserMap extends Mapper<User> {
       userCreatedAt: user.userCreatedAt,
       userUpdatedAt: user.userUpdatedAt,
       fleetId: user.fleetId,
+      accountId: user.accountId,
     };
   }
 
   public static toPersistent(user: any): any {
     return {
-      userId: user.userId,
       userName: user.userName,
       userSurname: user.userSurname,
       userPassword: user.userPassword,
@@ -29,6 +29,7 @@ export class UserMap extends Mapper<User> {
       userCreatedAt: user.userCreatedAt,
       userUpdatedAt: user.userUpdatedAt,
       fleetId: user.fleetId,
+      accountId: user.accountId,
     };
   }
 
@@ -44,7 +45,7 @@ export class UserMap extends Mapper<User> {
 
   static toDomainFromDb(raw: any): User {
     const userOrError = User.New({
-      fleetId: raw.fleetId,
+      userId: raw.userId,
       userName: raw.userName,
       userSurname: raw.userSurname,
       userPassword: raw.userPassword,
@@ -53,6 +54,8 @@ export class UserMap extends Mapper<User> {
       userTelephone: raw.userTelephone,
       userCreatedAt: raw.userCreatedAt,
       userUpdatedAt: raw.userUpdatedAt,
+      fleetId: raw.fleetId,
+      accountId: raw.accountId,
     });
 
     return userOrError.getValue() as User;
@@ -60,7 +63,7 @@ export class UserMap extends Mapper<User> {
 
   static toFrontend(raw: User): any {
     return {
-      fleetId: raw.fleetId,
+      userId: raw.userId,
       userName: raw.userName,
       userSurname: raw.userSurname,
       userPassword: raw.userPassword,
@@ -69,6 +72,8 @@ export class UserMap extends Mapper<User> {
       userTelephone: raw.userTelephone,
       userCreatedAt: raw.userCreatedAt,
       userUpdatedAt: raw.userUpdatedAt,
+      fleetId: raw.fleetId,
+      accountId: raw.accountId,
     };
   }
 }

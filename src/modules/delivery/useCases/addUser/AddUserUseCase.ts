@@ -9,6 +9,7 @@ import {
 import { Logger } from '../../../../infrastructure/logger';
 import { User } from '../../domain/User';
 import { UserMap } from '../../mappers/UserMap';
+import { IFleetRepo } from '../../repos/FleetRepo';
 import { IUserRepo } from '../../repos/UserRepo';
 import { AddUserDTO } from './AddUserDTO';
 import { AddUserErrors } from './AddUserErrors';
@@ -21,15 +22,28 @@ type Response = Either<
 
 export class AddUserUseCase implements UseCase<AddUserDTO, Response> {
   private userRepo: IUserRepo;
+  private fleetRepo: IFleetRepo;
 
-  constructor(userRepo: IUserRepo) {
+  constructor(userRepo: IUserRepo, fleetRepo: IFleetRepo) {
     this.userRepo = userRepo;
+    this.fleetRepo = fleetRepo;
   }
 
   public async execute(req: AddUserDTO): Promise<Response> {
     const log = new Logger('AddUserUseCase');
 
-    const u = UserMap.toBackend(req.user);
+    const fleetCheck = await this.fleetRepo.findFleetByFleetName(
+      req.userToAdd.fleetName,
+    );
+    if (fleetCheck === null) {
+      return wrong(
+        new AddUserErrors.FleetDoesntExists(req.userToAdd.fleetName),
+      ) as Response;
+    }
+    const userToAdd: any = req.userToAdd;
+    userToAdd.fleetId = fleetCheck.fleetId;
+
+    const u = UserMap.toBackend(userToAdd);
     const userOrError = User.New(u);
 
     if (userOrError.isFailure) {
@@ -43,6 +57,7 @@ export class AddUserUseCase implements UseCase<AddUserDTO, Response> {
       if (exist) {
         return wrong(new AddUserErrors.UserExists(user.userEmail)) as Response;
       }
+
       const r = await this.userRepo.save(user);
 
       const result: AddUserResponse = {

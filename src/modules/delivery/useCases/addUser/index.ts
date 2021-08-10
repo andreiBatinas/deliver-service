@@ -1,7 +1,10 @@
-import { userRepo } from '../../repos';
+import {
+  fleetRepo,
+  userRepo,
+} from '../../repos';
 import { AddUserController } from './AddUserController';
 import { AddUserUseCase } from './AddUserUseCase';
 
-const addUserUseCase = new AddUserUseCase(userRepo);
+const addUserUseCase = new AddUserUseCase(userRepo, fleetRepo);
 
 export { addUserUseCase, AddUserController };
