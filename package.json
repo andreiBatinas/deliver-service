@@ -1,0 +1,202 @@
+{
+  "name": "conversation-builder-service",
+  "version": "2.1.0",
+  "private": true,
+  "description": "",
+  "repository": {
+    "url": "git@bitbucket.org:whisbi/conversation-builder-service.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Andrei Batinas",
+    "email": "a.batinas@whisbi.com"
+  },
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test:unit": "mocha 'src/**/**.spec.ts' ",
+    "test:coverage": "npx nyc --check-coverage --reporter=lcov --reporter=text-summary npm run test:unit",
+    "migrate": "typeorm migration:create -n",
+    "migrate-up": "typeorm migration:run"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "nyc": {
+    "check-coverage": true,
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "mocha": {
+    "diff": true,
+    "extension": [
+      "ts"
+    ],
+    "package": "./package.json",
+    "recursive": true,
+    "reporter": "spec",
+    "require": [
+      "ts-node/register",
+      "reflect-metadata"
+    ],
+    "slow": 75,
+    "timeout": 2000,
+    "ui": "bdd",
+    "watch-files": [
+      "src/**/**.spec.ts"
+    ]
+  },
+  "dependencies": {
+    "@types/body-parser": "1.19.0",
+    "@types/bunyan": "1.8.6",
+    "@types/compression": "1.7.0",
+    "@types/cookie-parser": "1.4.2",
+    "@types/cors": "2.8.6",
+    "@types/express": "4.17.6",
+    "@types/express-rate-limit": "5.0.0",
+    "@types/fs-extra": "9.0.1",
+    "@types/google-protobuf": "3.7.2",
+    "@types/helmet": "0.0.47",
+    "@types/hpp": "0.2.1",
+    "@types/ioredis": "4.17.4",
+    "@types/node": "14.0.5",
+    "@types/uuid": "8.0.0",
+    "axios": "^0.21.1",
+    "body-parser": "1.19.0",
+    "bunyan": "1.8.12",
+    "compression": "1.7.4",
+    "connect-datadog": "0.0.9",
+    "cookie-parser": "1.4.5",
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "express-rate-limit": "5.1.3",
+    "firebase-admin": "^9.4.2",
+    "fs-extra": "9.0.0",
+    "google-protobuf": "3.12.2",
+    "grpc": "^1.24.3",
+    "grpc-tools": "1.9.0",
+    "grpc_tools_node_protoc_ts": "4.0.0",
+    "helmet": "3.22.0",
+    "hot-shots": "7.4.2",
+    "hpp": "0.2.3",
+    "ioredis": "4.17.3",
+    "mssql": "4.0.4",
+    "mysql": "2.18.1",
+    "nocache": "2.1.0",
+    "pg": "8.2.1",
+    "reflect-metadata": "0.1.13",
+    "ts-node": "8.10.2",
+    "typeorm": "0.2.25",
+    "typescript": "3.9.3",
+    "uuid": "7.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.0.0",
+    "@commitlint/config-conventional": "^12.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "@types/chai": "^4.2.11",
+    "@types/faker": "^4.1.12",
+    "@types/mocha": "^7.0.2",
+    "@types/sinon": "^9.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "chai": "^4.2.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.2.0",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-jsdoc": "^30.7.9",
+    "eslint-plugin-prefer-arrow": "^1.2.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "faker": "^4.1.0",
+    "husky": "^4.2.5",
+    "mocha": "^8.2.1",
+    "semantic-release": "^17.4.4",
+    "sinon": "^9.0.3",
+    "ts-loader": "^7.0.5",
+    "typescript-tslint-plugin": "^0.5.5"
+  },
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      {
+        "name": "master"
+      },
+      {
+        "name": "beta",
+        "prerelease": "true"
+      },
+      {
+        "name": "alpha",
+        "prerelease": "true"
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "commitsSort": [
+              "subject",
+              "scope"
+            ]
+          },
+          "host": "https://bitbucket.org"
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "docs/CHANGELOG.md"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ]
+    ]
+  }
+}

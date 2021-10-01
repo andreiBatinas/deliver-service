@@ -16,10 +16,10 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">4</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <stringProp name="ThreadGroup.num_threads">3</stringProp>
+        <stringProp name="ThreadGroup.ramp_time"></stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
@@ -27,57 +27,25 @@
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
-          <stringProp name="cacheKey">false</stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script">vars.put(&quot;env&quot;, &quot;ta&quot;)
-
-vars.put(&quot;id&quot;, &quot;${__RandomString(10, abcdefghijklmnopqrstuvwxyz)}&quot;)
-vars.put(&quot;nr&quot;, &quot;${__RandomString(10, 0123456789)}&quot;)
-vars.put(&quot;it&quot;, &quot;${__counter(TRUE,)}&quot;)
-
-vars.put(&quot;email&quot;,  vars.get(&quot;id&quot;) + &quot;.&quot; + &quot;${__threadNum}&quot; + &quot;.&quot; + vars.get(&quot;it&quot;) + &quot;@performancetest.com&quot;)
-vars.put(&quot;domain&quot;, vars.get(&quot;id&quot;) + &quot;-&quot; + &quot;${__threadNum}&quot; + &quot;-&quot; + vars.get(&quot;it&quot;) + &quot;performancetest.&quot; + vars.get(&quot;env&quot;))
-vars.put(&quot;phone&quot;,  vars.get(&quot;nr&quot;) + &quot;-&quot; + &quot;${__threadNum}&quot; + &quot;-&quot; + vars.get(&quot;it&quot;))</stringProp>
-          <stringProp name="scriptLanguage">groovy</stringProp>
-        </JSR223PreProcessor>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account-service register" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="widget-service-EXAMPLE_TEST_CHANGE_ME" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;account&quot;: {&#xd;
-        &quot;name&quot;: &quot;account.name performancetest&quot;,&#xd;
-        &quot;addressFirstLine&quot;: &quot;account.addressFirstLine performancetest&quot;,&#xd;
-        &quot;addressSecondLine&quot;: &quot;account.addressSecondLine performancetest&quot;,&#xd;
-        &quot;city&quot;: &quot;account.city performancetest&quot;,&#xd;
-        &quot;country&quot;: &quot;account.country performancetest&quot;,&#xd;
-        &quot;postalCode&quot;: &quot;account.postalCode performancetest&quot;&#xd;
-    },&#xd;
-    &quot;user&quot;: {&#xd;
-        &quot;email&quot;: &quot;${email}&quot;,&#xd;
-        &quot;password&quot;: &quot;@q1w2e3r4t5&quot;,&#xd;
-        &quot;name&quot;: &quot;user.name performancetest&quot;,&#xd;
-        &quot;surname&quot;: &quot;user.surname performancetest&quot;,&#xd;
-        &quot;phone&quot;: &quot;${phone}&quot;&#xd;
-    },&#xd;
-    &quot;domain&quot;: {&#xd;
-        &quot;name&quot;: &quot;${domain}&quot;&#xd;
-    }&#xd;
+    &quot;appId&quot;: &quot;gvyytzNOuEeVvUb9YvfAQg&quot;,&#xd;
+    &quot;appSecret&quot;: &quot;Z3Z5eXR6Tk91RWVWdlViOVl2ZkFRZy5GNjcyMTNCMTIyQTVENDQyRDJCOTNCREE4Q0M0NUM1NjRBNzBFQzVEMkE0RTBFOTVCQjU4NUNGMTk5ODY5Qzk4&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${env}-bff-web.whisbi.com</stringProp>
+          <stringProp name="HTTPSampler.domain">dev-bff-web.whisbi.com</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">api/v2/account/register</stringProp>
+          <stringProp name="HTTPSampler.path">api/v2/widget</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -94,10 +62,6 @@ vars.put(&quot;phone&quot;,  vars.get(&quot;nr&quot;) + &quot;-&quot; + &quot;${
               <stringProp name="Header.name">Content-Type</stringProp>
               <stringProp name="Header.value">application/json</stringProp>
             </elementProp>
-            <elementProp name="" elementType="Header">
-              <stringProp name="Header.name">Origin</stringProp>
-              <stringProp name="Header.value">${env}-ssp-web.whisbi.com</stringProp>
-            </elementProp>
           </collectionProp>
         </HeaderManager>
         <hashTree/>
@@ -112,8 +76,8 @@ vars.put(&quot;phone&quot;,  vars.get(&quot;nr&quot;) + &quot;-&quot; + &quot;${
         </ResponseAssertion>
         <hashTree/>
         <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
-          <stringProp name="JSON_PATH">status</stringProp>
-          <stringProp name="EXPECTED_VALUE">true</stringProp>
+          <stringProp name="JSON_PATH">token</stringProp>
+          <stringProp name="EXPECTED_VALUE">\S{428}</stringProp>
           <boolProp name="JSONVALIDATION">true</boolProp>
           <boolProp name="EXPECT_NULL">false</boolProp>
           <boolProp name="INVERT">false</boolProp>
@@ -128,7 +92,7 @@ vars.put(&quot;phone&quot;,  vars.get(&quot;nr&quot;) + &quot;-&quot; + &quot;${
           <intProp name="calcMode">1</intProp>
           <doubleProp>
             <name>throughput</name>
-            <value>600.0</value>
+            <value>120.0</value>
             <savedValue>0.0</savedValue>
           </doubleProp>
         </ConstantThroughputTimer>

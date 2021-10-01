@@ -1,0 +1,15 @@
+{
+  "env": "dev",
+  "http": {
+    "port": 9400
+  },
+  "db": {
+    "driver": "mysql",
+    "host": "localhost",
+    "port": "3306",
+    "username": "coreusr",
+    "password": "corepass",
+    "database": "whisbiconfiguration_core",
+    "logging": true
+  }
+}

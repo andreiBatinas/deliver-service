@@ -1,0 +1,15 @@
+{
+  "env": "dev",
+  "http": {
+    "port": 9400
+  },
+  "db": {
+    "driver": "postgres",
+    "host": "207.154.200.15",
+    "port": "5432",
+    "username": "user",
+    "password": "pass",
+    "database": "delivery_db",
+    "logging": true
+  }
+}

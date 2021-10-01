@@ -1,26 +1,20 @@
 # -- SH Adjustments
 null      :=
 SPACE     := $(null) $(null)
-export GO111MODULE=on
-export GOFLAGS=-mod=vendor
 
 # -- Code
 PROJECT_PATH = $(subst $(notdir $(SPACE)),/,$(CURDIR))
 # Get dir        $(notdir $(subst $(SPACE),,$(CURDIR)))
 # Get parent dir $(subst $(notdir $(CURDIR)),,$(CURDIR))
-GO = go
-BIN	= $(PROJECT_PATH)bin
-FILES = $(wildcard *.go)
+BIN = $(PROJECT_PATH)node_modules/.bin
+FILES = $(wildcard *.ts)
 
 #-- Management
-MODULE   = $(shell env GO111MODULE=$(GO111MODULE) $(GO) list -m)
 DATE    ?= $(shell date +%FT%T%z)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
 			cat $(CURDIR)/.version 2> /dev/null || echo v0)
-PKGS     = $(or $(PKG),$(shell env GO111MODULE=$(GO111MODULE)  $(GO) list ./...))
-TESTPKGS = $(shell env GO111MODULE=$(GO111MODULE)  $(GO) list -f \
-			'{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' \
-			$(PKGS))
+
+# -- View utils
 V = 0
 Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m➡\033[0m")
@@ -29,58 +23,64 @@ M = $(shell printf "\033[34;1m➡\033[0m")
 .PHONY: all
 all: help
 
-# Tools
-$(BIN):
-	@mkdir -p $@
-$(BIN)/%: | $(BIN) ; $(info $(M) Building $(PACKAGE)…)
-	$Q tmp=$$(mktemp -d); \
-	   env GO111MODULE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(PACKAGE) \
-		|| ret=$$?; \
-	   rm -rf $$tmp ; exit $$ret
-GOLINT = $(BIN)/golint
-$(BIN)/golint: PACKAGE=golang.org/x/lint/golint
-
-.PHONY: build
-build: $(BIN) ; $(info $(M) Building executable...) @ ## Build program binary
-	$Q CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GO) build \
-		-tags release \
-		-ldflags '-X $(MODULE)/cmd.Version=$(VERSION) -X $(MODULE)/cmd.BuildDate=$(DATE)' \
-		-o $(BIN)/$(basename $(MODULE)) ./cmd/app/$(FILES)
-
-.PHONY: run
-run: ; $(info $(M) Running dev build (on the fly) ...) @ ## Run intermediate builds
-	$Q $(GO) run ./cmd/app/$(FILES)
-.PHONY: run-build
-run-build: build | ; $(info $(M) Running dev build (compiled) ...) @ ## Run dev build
-	$Q $(BIN)/$(basename $(MODULE))
-
+# -- Setup
 .PHONY: install
-install: ; $(info $(M) Installing dependencies...)	@ ## Install project dependencies
-	$Q $(GO) mod vendor
+install: ; $(info $(M) Installing dependencies.)	@ ## Install project dependencies
+	$Q npm i
+
+.PHONY: install-cache
+install-cache: ; $(info $(M) Installing cache dependencies.)	@ ## Install cache project dependencies. package-lock.jon must exist
+	$Q npm ci
 
 # -- Testing
 .PHONY: test-unit
 test-unit: ; $(info $(M) Running unit tests ...)	@ ## Run unit tests
-	$Q go test -short  ./...
+	$Q npm run test:unit
 
+.PHONY: test-e2e
+test-e2e: ; $(info $(M) Running e2e tests ...)	@ ## Run e2e tests
+	$Q echo "e2e command not implemented"
+
+.PHONY: test-coverage
+test-coverage: ; $(info $(M) Running coverage check ...)	@ ## Run a coverage check
+	$Q npm run test:coverage
+
+# -- Running
+.PHONY: run
+run: ; $(info $(M) Running localhost ...)	@ ## Run locally
+	$Q npm start
+
+# -- Running debug
+.PHONY: run-debug
+run-debug: ; $(info $(M) Running localhost ...)	@ ## Run locally
+	$Q DEBUG=* npm start
+
+# -- Building
 .PHONY: proto-gen
-proto-gen: ; $(info $(M) Generate protobuf sources ...)	@ ## Generate proto sources
-	$Q protoc -I ./vendor -I ./ ./proto/*.proto --go_out=plugins=grpc:protogen
+proto-gen: ; $(info $(M) Generating proto repository ...) @ ## Generate protobuf sources
+	$Q ./node_modules/.bin/grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=./proto -I ./proto proto/*.proto
+	$Q ./node_modules/.bin/grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./proto --grpc_out=./proto -I ./proto proto/*.proto
 
-.PHONY: test-full
-test-full: ; $(info $(M) Running full tests ...)	@ ## Run all test wit coverage tests
-	$Q go test -v -cover -covermode=atomic ./...
+.PHONY: build
+build: ; $(info $(M) Building docker image ...)	@ ## Build docker image
+
+.PHONY: clean
+clean: ; $(info $(M) Cleanup project ...)	@ ## Cleanup project
+
+.PHONY: release
+release: ; $(info $(M) Creating release ...)	@ ## Create release and change notes
+	$Q npx semantic-release
 
 # -- Misc
 .PHONY: sys-check
-sys-check: ; $(info $(M) Go environment checking...)	@ ## Check node version
-	$Q go version
+sys-check: ; $(info $(M) Node Version checking...)	@ ## Check node version
+	$Q echo "Node version: $(shell node --version)"
+	$Q echo " NPM version: $(shell npm --version)"
+	$Q echo " TSC version: $(shell $(BIN)/tsc --version)"
 
 .PHONY: version
 version: ; $(info $(M) Version: $(VERSION))	@ ## Current version
 
 help:
-	@echo "\nGo Clean Arch\n----------------"
 	@grep -E '^[ a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
-

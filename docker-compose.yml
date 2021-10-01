@@ -1,35 +1,35 @@
 version: '3.6'
 services:
-  # # Redis
-  # redis:
-  #   image: "redis:alpine"
-  #   command: redis-server
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - whisbi-redis:/var/lib/redis
-  #     - whisbi-redis:/usr/local/etc/redis/redis.conf
+  # Redis
+  redis:
+    image: 'redis:alpine'
+    command: redis-server
+    ports:
+      - '6379:6379'
+    volumes:
+      - whisbi-redis:/var/lib/redis
+      - whisbi-redis:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - whisbi-dev-net
+
+  # # PostgreSQL
+  # postgres:
+  #   hostname: postgres
+  #   image: postgres:9.6
+  #   restart: 'always'
   #   environment:
-  #     - REDIS_REPLICATION_MODE=master
+  #     POSTGRES_USER: 'coreusr'
+  #     POSTGRES_PASSWORD: 'corepass'
+  #     POSTGRES_DB: 'whisbiconfiguration_core'
+  #     PGDATA: '/var/lib/postgresql/data/pgdata'
+  #   volumes:
+  #     - 'whisbi-postgres:/var/lib/postgresql/data'
+  #   ports:
+  #     - '5433:5432'
   #   networks:
   #     - whisbi-dev-net
-
-  # PostgreSQL
-  postgres:
-    hostname: postgres
-    image: postgres:9.6
-    restart: 'always'
-    environment:
-      POSTGRES_USER: 'user'
-      POSTGRES_PASSWORD: 'pass'
-      POSTGRES_DB: 'dev'
-      PGDATA: '/var/lib/postgresql/data/pgdata'
-    volumes:
-      - 'delivery-postgres:/var/lib/postgresql/data'
-    ports:
-      - '5433:5432'
-    networks:
-      - delivery-dev-net
 
   # # MySQL
   # mysql:
@@ -47,18 +47,37 @@ services:
   #   networks:
   #     - whisbi-dev-net
 
+  # MSSQL
+  mssql:
+    image: microsoft/mssql-server-linux:2017-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_DATA_DIR: /var/opt/sqlserver/data
+      MSSQL_PID: 'Developer'
+      MSSQL_SA_PASSWORD: 'MyStrongpass12@'
+    ports:
+      - '1433:1433'
+    volumes:
+      - whisbi-mssql:/var/lib/mssql
+    networks:
+      - whisbi-dev-net
+
 # Network
 networks:
-  delivery-dev-net:
+  whisbi-dev-net:
     driver: bridge
 
-# Volumes - docker volume create --driver local delivery-postgres
+# Volumes - docker volume create --driver local whisbi-postgres
 # Volumes - docker volume create --driver local whisbi-mysql
 # Volumes - docker volume create --driver local whisbi-redis
+# Volumes - docker volume create --driver local whisbi-mssql
 volumes:
-  delivery-postgres:
+  whisbi-postgres:
     external: true
-  # whisbi-mysql:
-  #   external: true
-  # whisbi-redis:
-  #   external: true
+  whisbi-mysql:
+    external: true
+  whisbi-redis:
+    external: true
+  whisbi-mssql:
+    external: true

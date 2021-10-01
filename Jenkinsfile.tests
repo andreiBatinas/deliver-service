@@ -1,0 +1,25 @@
+lock('TA - conversation-builder-service') {
+  node ('COMPILER2') {
+    stage('Checkout') {
+      //checkout scm
+      //^ this line is normally enough, but dsl jobs seem to use https by default. And due to a bitbucket bug only ssh is currently working so we force ssh:
+      git url: 'git@bitbucket.org:whisbi/conversation-builder-service.git', branch: env.CHANGE_BRANCH
+    }
+
+    //NOTE the deploy job already runs the unit tests
+    stage('Deploy PR branch to TA') {
+      build job:'TA - conversation-builder-service', parameters:[string(name: 'CHECKOUT', value: env.CHANGE_BRANCH)]
+    }
+
+    stage('Performance test') {
+      def testImage = docker.build('conversation-builder-service-performance-test-image', '-f ./deploy/Dockerfile.performance .')
+      sh 'docker run -v ${PWD}/performance-tests:/jmeter --rm conversation-builder-service-performance-test-image'
+      sh 'sudo chmod -R 777 performance-tests'
+      perfReport 'performance-tests/results.jtl'
+    }
+
+    stage('Deploy master branch to TA') {
+      build job:'TA - conversation-builder-service', parameters:[string(name: 'CHECKOUT', value: 'master')]
+    }
+  }
+}
